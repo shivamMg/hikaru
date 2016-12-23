@@ -1,0 +1,12 @@
+.float-right {
+  float: right !important;
+}
+
+.margin-top-10 {
+  margin-top: 10px !important;
+}
+
+.ui.error.message {
+  padding: 8px;
+  font-size: 0.9em;
+}
