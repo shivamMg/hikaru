@@ -5,14 +5,24 @@ import { Container, Header } from 'semantic-ui-react';
 import toastr from 'toastr';
 import ProjectForm from './ProjectForm';
 import * as projectActions from '../../actions/projectActions';
+import { userIsStaff } from './helpers';
 
 class ModifyProjectPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.props.actions.loadProject(this.props.projectId);
     this.state = {
-      project: Object.assign({}, props.project),
+      project: {
+        id: 0,
+        name: '',
+        description: '',
+        sourceLink: '',
+        websiteLink: '',
+        tags: [],
+        author: '',
+        authorLink: '',
+        approved: false
+      },
       errors: {},
       isModified: false,
       isDeleted: false
@@ -23,8 +33,23 @@ class ModifyProjectPage extends React.Component {
     this.deleteProject = this.deleteProject.bind(this);
   }
 
+  componentWillMount() {
+    if (!this.props.isAuthenticated) {
+      return this.context.router.push('/projects');
+    }
+
+    // Check if user belongs to staff
+    if (!userIsStaff()) {
+      return this.context.router.push('/404');
+    }
+  }
+
+  componentDidMount() {
+    this.props.actions.loadProject(this.props.projectId);
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (this.props.project.id !== nextProps.project.id) {
+    if (this.state.project.id !== nextProps.project.id) {
       this.setState({ project: Object.assign({}, nextProps.project) });
     }
 
@@ -99,7 +124,8 @@ ModifyProjectPage.propTypes = {
   projectId: PropTypes.number.isRequired,
   actions: PropTypes.object.isRequired,
   isModified: PropTypes.bool.isRequired,
-  isDeleted: PropTypes.bool.isRequired
+  isDeleted: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
 };
 
 ModifyProjectPage.contextTypes = {
@@ -108,13 +134,15 @@ ModifyProjectPage.contextTypes = {
 
 function mapStateToProps(state, ownProps) {
   const projectId = parseInt(ownProps.params.id);
+  const { project, errors, isModified, isDeleted } = state.projects;
 
   return {
-    projectId: projectId,
-    project: state.projects.project,
-    errors: state.projects.errors,
-    isModified: state.projects.isModified,
-    isDeleted: state.projects.isDeleted
+    projectId,
+    project,
+    errors,
+    isModified,
+    isDeleted,
+    isAuthenticated: state.auth.isAuthenticated
   };
 }
 

@@ -1,3 +1,4 @@
+import { displayRequestError, requestFailure } from './actionHelpers';
 import * as types from './actionTypes';
 import projectApi from '../api/projectApi';
 import tagApi from '../api/tagApi';
@@ -44,9 +45,10 @@ export function loadTags() {
     return tagApi.getTags().then(({ tags, response }) => {
       if (response.ok) {
         return dispatch(loadTagsSuccess(tags));
+      } else {
+        displayRequestError();
+        return dispatch(requestFailure());
       }
-    }).catch(error => {
-      throw(error);
     });
   };
 }
@@ -56,9 +58,10 @@ export function loadProjects() {
     return projectApi.getProjects().then(({ projects, response }) => {
       if (response.ok) {
         return dispatch(loadProjectsSuccess(projects));
+      } else {
+        displayRequestError();
+        return dispatch(requestFailure());
       }
-    }).catch(error => {
-      throw(error);
     });
   };
 }
@@ -68,9 +71,10 @@ export function loadProject(projectId) {
     return projectApi.getProject(projectId).then(({ project, response }) => {
       if (response.ok) {
         return dispatch(loadProjectSuccess(project));
+      } else {
+        displayRequestError();
+        return dispatch(requestFailure());
       }
-    }).catch(error => {
-      throw(error);
     });
   };
 }
@@ -79,13 +83,17 @@ export function createProject(project) {
   return function (dispatch, getState) {
     return projectApi.createProject(project).then(({ project, response }) => {
       if (!response.ok) {
-        const errors = project;
-        return dispatch(createProjectFailure(errors));
+        if (response.status === 400) {
+          /* Send validation errors to form */
+          const errors = project;
+          return dispatch(createProjectFailure(errors));
+        } else {
+          displayRequestError();
+          return dispatch(requestFailure());
+        }
       } else {
         return dispatch(createProjectSuccess(project));
       }
-    }).catch(error => {
-      throw(error);
     });
   };
 }
@@ -94,13 +102,17 @@ export function modifyProject(project) {
   return function (dispatch, getState) {
     return projectApi.modifyProject(project).then(({ project, response }) => {
       if (!response.ok) {
-        const errors = project;
-        return dispatch(modifyProjectFailure(errors));
+        if (response.status === 400) {
+          /* Send validation errors to form */
+          const errors = project;
+          return dispatch(modifyProjectFailure(errors));
+        } else {
+          displayRequestError();
+          return dispatch(requestFailure());
+        }
       } else {
         return dispatch(modifyProjectSuccess(project));
       }
-    }).catch(error => {
-      throw(error);
     });
   };
 }
@@ -109,13 +121,13 @@ export function deleteProject(project) {
   return function (dispatch, getState) {
     return projectApi.deleteProject(project).then(({ project, response }) => {
       if (!response.ok) {
-        const errors = project;
-        return dispatch(deleteProjectFailure(errors));
+        displayRequestError();
+        return dispatch(requestFailure());
+        // const errors = project;
+        // return dispatch(deleteProjectFailure(errors));
       } else {
         return dispatch(deleteProjectSuccess(project));
       }
-    }).catch(error => {
-      throw(error);
     });
   };
 }

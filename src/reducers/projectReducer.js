@@ -6,17 +6,7 @@ export default function projectReducer(state = {
     isCreated: false,
     isModified: false,
     isDeleted: false,
-    project: {
-      id: 0,
-      name: '',
-      description: '',
-      sourceLink: '',
-      websiteLink: '',
-      tags: [],
-      author: '',
-      authorLink: '',
-      approved: false
-    }
+    project: {}
   }, action) {
 
   switch(action.type) {
@@ -64,6 +54,14 @@ export default function projectReducer(state = {
     case types.DELETE_PROJECT_FAILURE:
       return Object.assign({}, state, {
         errors: action.errors,
+        isDeleted: false
+      });
+
+    case types.REQUEST_FAILURE:
+      return Object.assign({}, state, {
+        errors: {},
+        isCreated: false,
+        isModified: false,
         isDeleted: false
       });
 

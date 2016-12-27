@@ -1,11 +1,11 @@
 import React, { PropTypes }  from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
 import { Header, Button, Container } from 'semantic-ui-react';
-import * as projectActions from '../../actions/projectActions';
+import * as authActions from '../../actions/authActions';
 import ProjectList from './ProjectList';
 import TagsSearch from './TagsSearch';
+import { userIsStaff } from './helpers';
 
 class ProjectsPage extends React.Component {
   constructor(props, context) {
@@ -15,7 +15,7 @@ class ProjectsPage extends React.Component {
       projectList: this.props.projects
     };
 
-    this.redirectToAddProjectPage = this.redirectToAddProjectPage.bind(this);
+    this.redirectToCreateProjectPage = this.redirectToCreateProjectPage.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
   }
 
@@ -25,8 +25,8 @@ class ProjectsPage extends React.Component {
     }
   }
 
-  redirectToAddProjectPage() {
-    browserHistory.push('/projects/create');
+  redirectToCreateProjectPage() {
+    this.context.router.push('/projects/create');
   }
 
   handleQueryChange(event, { value }) {
@@ -56,23 +56,40 @@ class ProjectsPage extends React.Component {
 
   render() {
     const { projectList } = this.state;
-    const { tagSearchOptions } = this.props;
+    const { tagSearchOptions, isAuthenticated } = this.props;
 
     return (
       <Container>
         <Header size="large" color="grey" content="Gallery" />
-        <Button content="Add Your Project" size="tiny" basic compact color="teal"
-          onClick={this.redirectToAddProjectPage} />
+
+        {isAuthenticated &&
+          <Button content="Submit Your Project" size="tiny" basic compact color="teal"
+            onClick={this.redirectToCreateProjectPage} />
+        }
+        {!isAuthenticated &&
+          <p>
+            Want to submit your own project?&nbsp;
+            <a onClick={this.props.authActions.openAuthModal} style={{ cursor: "pointer" }}>Log in</a>.
+          </p>
+        }
+
         <TagsSearch options={tagSearchOptions} onChange={this.handleQueryChange} />
-        <ProjectList projects={projectList} />
+
+        <ProjectList projects={projectList} showModifyLinks={userIsStaff()} />
       </Container>
     );
   }
 }
 
 ProjectsPage.propTypes = {
+  authActions: PropTypes.object.isRequired,
   projects: PropTypes.array.isRequired,
-  tagSearchOptions: PropTypes.array.isRequired
+  tagSearchOptions: PropTypes.array.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
+};
+
+ProjectsPage.contextTypes = {
+  router: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {
@@ -83,13 +100,14 @@ function mapStateToProps(state, ownProps) {
 
   return {
     projects: state.projects.projects,
-    tagSearchOptions: tagSearchOptions
+    tagSearchOptions: tagSearchOptions,
+    isAuthenticated: state.auth.isAuthenticated
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(projectActions, dispatch)
+    authActions: bindActionCreators(authActions, dispatch)
   };
 }
 

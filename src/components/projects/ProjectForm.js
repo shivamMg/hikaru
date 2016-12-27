@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import TextInput from '../common/TextInput';
 import { Header, Modal, Grid, Message, Icon, Button, Segment, Form } from 'semantic-ui-react';
 
 const ProjectForm = ({ project, onSubmit, onChange, loading, errors, showApproveField, showDeleteButton, onDelete }) => {
@@ -22,14 +21,14 @@ const ProjectForm = ({ project, onSubmit, onChange, loading, errors, showApprove
         value={project.description} onChange={onChange} error={errors.description ? true : false} />
       <Message error list={errors.description} />
 
-      <Form.Input type="url" placeholder="Website Link" label="Website" name="websiteLink"
+      <Form.Input type="url" placeholder="Project Website Link" label="Website" name="websiteLink"
         value={project.websiteLink} onChange={onChange} error={errors.websiteLink ? true : false} />
       <Message error list={errors.websiteLink} />
-      <Form.Input type="url" placeholder="Source Link" label="Source *" name="sourceLink"
+      <Form.Input type="url" placeholder="Project Source Link" label="Source *" name="sourceLink"
         value={project.sourceLink} onChange={onChange} error={errors.sourceLink ? true : false} />
       <Message error list={errors.sourceLink} />
 
-      <Form.Input type="text" placeholder="Comma separated Tags" label="Tags" name="tags"
+      <Form.Input type="text" placeholder="Comma Separated Tags" label="Tags" name="tags"
         value={project.tags.map(tag => tag.name)} onChange={onChange} error={errors.tags ? true : false} />
       {errors.tags &&
         <Message error list={errors.tags[0].name} />

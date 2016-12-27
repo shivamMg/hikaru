@@ -6,6 +6,7 @@ import AboutPage from './components/about/AboutPage';
 import ProjectsPage from './components/projects/ProjectsPage';
 import CreateProjectPage from './components/projects/CreateProjectPage';
 import ModifyProjectPage from './components/projects/ModifyProjectPage';
+import NotFoundPage from './components/common/NotFoundPage';
 
 export default (
   <Route path="/" component={App}>
@@ -14,5 +15,6 @@ export default (
     <Route path="projects" component={ProjectsPage} />
     <Route path="projects/create" component={CreateProjectPage} />
     <Route path="project/:id" component={ModifyProjectPage} />
+    <Route path="*" component={NotFoundPage} />
   </Route>
 );

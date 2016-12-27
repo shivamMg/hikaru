@@ -1,9 +1,7 @@
-import { GET_TOKEN_URL, REFRESH_TOKEN_URL, VERIFY_TOKEN_URL, displayNetworkError } from './apiHelpers';
+import { USERS_URL, displayNetworkError } from './apiHelpers';
 
-// TODO: Implement Token refresh and verification
-
-class AuthApi {
-  static getToken(creds) {
+class UserApi {
+  static createUser(creds) {
     let payload = {
       username: creds.username,
       password: creds.password
@@ -14,7 +12,7 @@ class AuthApi {
       body: JSON.stringify(payload)
     };
 
-    return fetch(GET_TOKEN_URL, config).then(response =>
+    return fetch(USERS_URL, config).then(response =>
       response.json().then(user =>
         ({ user, response })
       )
@@ -22,4 +20,4 @@ class AuthApi {
   }
 }
 
-export default AuthApi;
+export default UserApi;

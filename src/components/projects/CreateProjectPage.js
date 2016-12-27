@@ -10,7 +10,16 @@ class CreateProjectPage extends React.Component {
     super(props, context);
 
     this.state = {
-      project: Object.assign({}, props.project),
+      project: {
+        name: '',
+        description: '',
+        sourceLink: '',
+        websiteLink: '',
+        tags: [],
+        author: '',
+        authorLink: '',
+        approved: false
+      },
       errors: {},
       isCreated: false,
       showModal: false
@@ -19,6 +28,12 @@ class CreateProjectPage extends React.Component {
     this.updateProjectState = this.updateProjectState.bind(this);
     this.createProject = this.createProject.bind(this);
     this.redirectToProjectsPage = this.redirectToProjectsPage.bind(this);
+  }
+
+  componentWillMount() {
+    if (!this.props.isAuthenticated) {
+      this.context.router.push('/projects');
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -89,10 +104,10 @@ class CreateProjectPage extends React.Component {
 }
 
 CreateProjectPage.propTypes = {
-  project: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
-  isCreated: PropTypes.bool.isRequired
+  isCreated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
 };
 
 CreateProjectPage.contextTypes = {
@@ -100,19 +115,8 @@ CreateProjectPage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  let project = {
-    name: '',
-    description: '',
-    sourceLink: '',
-    websiteLink: '',
-    tags: [],
-    author: '',
-    authorLink: '',
-    approved: false
-  };
-
   return {
-    project: project,
+    isAuthenticated: state.auth.isAuthenticated,
     errors: state.projects.errors,
     isCreated: state.projects.isCreated
   };

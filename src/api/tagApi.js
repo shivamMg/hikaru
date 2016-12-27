@@ -1,5 +1,4 @@
-const URL = 'http://localhost:8000/api';
-const TAGS_URL = URL + '/tags';
+import { TAGS_URL, displayNetworkError } from './apiHelpers';
 
 class TagApi {
   static getTags() {
@@ -7,7 +6,7 @@ class TagApi {
       response.json().then(tags =>
         ({ tags, response })
       )
-    );
+    ).catch(displayNetworkError);
   }
 }
 

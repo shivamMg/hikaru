@@ -1,21 +1,24 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Popup, Card, Icon, Button } from 'semantic-ui-react';
+import { Card, Icon, Button } from 'semantic-ui-react';
 
-const ProjectCard = ({project}) => {
+const ProjectCard = ({ project, showModifyLinks }) => {
   return (
     <Card color="teal">
       <Card.Content>
-        <Popup content="Source" inverted basic
-          trigger={
-            <a href={project.sourceLink} target="_blank" className="float-right">
-              <Icon name="code" />
-            </a>
-          } />
+        <div className="float-right">
+          {showModifyLinks &&
+            <Link to={`/project/${project.id}`}>
+              <Icon name="edit" />
+            </Link>
+          }
+          <a href={project.sourceLink} target="_blank">
+            <Icon name="code" />
+          </a>
+        </div>
 
         <Card.Header>
           <a href={project.websiteLink}>{project.name}</a>
-          <Link to={`/project/${project.id}`}>Link</Link>
         </Card.Header>
         <Card.Meta>
           By <a href={project.authorLink} target="_blank">{project.author}</a>
@@ -34,7 +37,8 @@ const ProjectCard = ({project}) => {
 };
 
 ProjectCard.propTypes = {
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
+  showModifyLinks: PropTypes.bool
 };
 
 export default ProjectCard;

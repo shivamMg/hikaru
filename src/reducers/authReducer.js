@@ -4,7 +4,8 @@ export default function auth(state = {
     isFetching: false,
     isAuthenticated: localStorage.getItem('token') ? true : false,
     loginErrors: {},
-    signupErrors: {}
+    signupErrors: {},
+    showAuthModal: false
   }, action) {
 
   switch (action.type) {
@@ -39,6 +40,11 @@ export default function auth(state = {
       return Object.assign({}, state, { signupErrors: {} });
     case types.SIGNUP_FAILURE:
       return Object.assign({}, state, { signupErrors: action.errors });
+
+    case types.AUTH_MODAL_OPEN:
+      return Object.assign({}, state, { showAuthModal: true });
+    case types.AUTH_MODAL_CLOSE:
+      return Object.assign({}, state, { showAuthModal: false });
 
     default:
       return state;

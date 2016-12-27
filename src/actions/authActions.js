@@ -1,5 +1,7 @@
-import authApi from '../api/authApi';
+import { displayRequestError, requestFailure } from './actionHelpers';
 import * as types from './actionTypes';
+import authApi from '../api/authApi';
+import userApi from '../api/userApi';
 
 function loginRequest(creds) {
   return {
@@ -65,20 +67,45 @@ function signupFailure(errors) {
   };
 }
 
+function openAuthModalAction() {
+  return { type: types.AUTH_MODAL_OPEN };
+}
+
+function closeAuthModalAction() {
+  return { type: types.AUTH_MODAL_CLOSE };
+}
+
+export function openAuthModal() {
+  return function(dispatch) {
+    return dispatch(openAuthModalAction());
+  };
+}
+
+export function closeAuthModal() {
+  return function(dispatch) {
+    return dispatch(closeAuthModalAction());
+  };
+}
+
 export function loginUser(creds) {
   return function(dispatch) {
     dispatch(loginRequest(creds));
 
     return authApi.getToken(creds).then(({ user, response }) => {
       if (!response.ok) {
-        const errors = user;
-        return dispatch(loginFailure(errors));
+        if (response.status === 400) {
+          /* Send validation errors to form */
+          const errors = user;
+          return dispatch(loginFailure(errors));
+        } else {
+          displayRequestError();
+          return dispatch(requestFailure());
+        }
       } else {
         localStorage.setItem('token', user.token);
+        dispatch(closeAuthModalAction());
         return dispatch(loginSuccess(user));
       }
-    }).catch(error => {
-      throw(error);
     });
   };
 }
@@ -92,21 +119,25 @@ export function logoutUser() {
 }
 
 export function signupUser(creds) {
-  /* Also logs in if user registered successfully */
+  /* Also logs in if user was created successfully */
   return function(dispatch) {
     dispatch(signupRequest(creds));
 
-    return authApi.registerUser(creds).then(({ user, response }) => {
+    return userApi.createUser(creds).then(({ user, response }) => {
       if (!response.ok) {
-        const errors = user;
-        return dispatch(signupFailure(errors));
+        if (response.status === 400) {
+          /* Send validation errors to form */
+          const errors = user;
+          return dispatch(signupFailure(errors));
+        } else {
+          displayRequestError();
+          return dispatch(requestFailure());
+        }
       } else {
         dispatch(signupSuccess(user));
         // Log user in
         return dispatch(loginUser(creds));
       }
-    }).catch(error => {
-      throw(error);
     });
   };
 }

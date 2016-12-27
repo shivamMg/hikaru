@@ -1,7 +1,7 @@
 {
   "name": "hikaru",
   "version": "1.0.0",
-  "description": "Projects Showcase Gallery",
+  "description": "Projects Gallery",
   "scripts": {
     "start": "npm-run-all --parallel open:src lint:watch",
     "open:src": "babel-node tools/srcServer.js",

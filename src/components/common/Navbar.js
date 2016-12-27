@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 import { Menu, Button } from 'semantic-ui-react';
 import LoginSignupModal from './LoginSignup';
-import { loginUser, logoutUser, signupUser } from '../../actions/authActions';
+import { openAuthModal, logoutUser } from '../../actions/authActions';
 
 class Navbar extends React.Component {
   constructor(props, context) {
@@ -15,7 +14,7 @@ class Navbar extends React.Component {
   }
 
   getUsername(event) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const base64Payload = atob(token.split('.')[1]);
     const payload = JSON.parse(base64Payload);
     return payload.username;
@@ -23,16 +22,16 @@ class Navbar extends React.Component {
 
   pageRedirect(event, item) {
     if (item.name == 'home') {
-      browserHistory.push('/');
+      this.context.router.push('/');
     } else {
-      browserHistory.push('/' + item.name);
+      this.context.router.push('/' + item.name);
     }
 
     return this.setState({ activeItem: item.name });
   }
 
   render() {
-    const { dispatch, isAuthenticated, loginErrors, signupErrors } = this.props;
+    const { dispatch, isAuthenticated } = this.props;
 
     return (
       <Menu>
@@ -52,13 +51,12 @@ class Navbar extends React.Component {
           onClick={this.pageRedirect}
           content="Gallery" />
         <Menu.Menu position="right">
+          <LoginSignupModal />
+
           {!isAuthenticated &&
             <Menu.Item>
-              <LoginSignupModal
-                loginErrors={loginErrors}
-                signupErrors={signupErrors}
-                onLoginClick={creds => dispatch(loginUser(creds))}
-                onSignupClick={creds => dispatch(signupUser(creds))} />
+              <Button color="green" content="Login &middot; Signup"
+                onClick={function() { dispatch(openAuthModal()); }} />
             </Menu.Item>
           }
           {isAuthenticated &&
@@ -66,7 +64,7 @@ class Navbar extends React.Component {
               <Menu.Item content={this.getUsername()} />
               <Menu.Item>
                 <Button compact icon="sign out" content="Logout"
-                  onClick={() => dispatch(logoutUser())} />
+                  onClick={function() { dispatch(logoutUser()); }} />
               </Menu.Item>
             </Menu.Menu>
           }
@@ -78,9 +76,11 @@ class Navbar extends React.Component {
 
 Navbar.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  loginErrors: PropTypes.object,
-  signupErrors: PropTypes.object
+  isAuthenticated: PropTypes.bool.isRequired
+};
+
+Navbar.contextTypes = {
+  router: PropTypes.object
 };
 
 export default Navbar;

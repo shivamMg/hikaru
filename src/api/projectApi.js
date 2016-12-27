@@ -1,5 +1,4 @@
-const URL = 'http://localhost:8000/api';
-const PROJECTS_URL = URL + '/projects/';
+import { PROJECTS_URL, displayNetworkError } from './apiHelpers';
 
 class ProjectApi {
   static getProjects() {
@@ -7,7 +6,7 @@ class ProjectApi {
       response.json().then(projects =>
         ({ projects, response })
       )
-    );
+    ).catch(displayNetworkError);
   }
 
   static getProject(projectId) {
@@ -15,7 +14,7 @@ class ProjectApi {
       response.json().then(project =>
         ({ project, response })
       )
-    );
+    ).catch(displayNetworkError);
   }
 
   static createProject(project) {
@@ -35,7 +34,7 @@ class ProjectApi {
       response.json().then(project =>
         ({ project, response })
       )
-    );
+    ).catch(displayNetworkError);
   }
 
   static modifyProject(project) {
@@ -56,7 +55,7 @@ class ProjectApi {
       response.json().then(project =>
         ({ project, response })
       )
-    );
+    ).catch(displayNetworkError);
   }
 
   static deleteProject(project) {
@@ -74,7 +73,7 @@ class ProjectApi {
 
     return fetch(url, config).then(response =>
       ({ project, response })
-    );
+    ).catch(displayNetworkError);
   }
 }
 

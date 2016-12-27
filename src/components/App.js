@@ -5,14 +5,12 @@ import Navbar from './common/Navbar';
 
 class App extends React.Component {
   render() {
-    const { dispatch, isAuthenticated, loginErrors, signupErrors } = this.props;
+    const { dispatch, isAuthenticated } = this.props;
 
     return (
       <Container fluid>
         <Navbar
           isAuthenticated={isAuthenticated}
-          loginErrors={loginErrors}
-          signupErrors={signupErrors}
           dispatch={dispatch} />
         {this.props.children}
       </Container>
@@ -23,16 +21,13 @@ class App extends React.Component {
 App.propTypes = {
   children: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  loginErrors: PropTypes.object,
-  signupErrors: PropTypes.object
+  isAuthenticated: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
-  const { auth } = state;
-  const { isAuthenticated, loginErrors, signupErrors } = auth;
+  const { isAuthenticated } = state.auth;
 
-  return { isAuthenticated, loginErrors, signupErrors };
+  return { isAuthenticated };
 }
 
 export default connect(mapStateToProps)(App);
