@@ -1,8 +1,14 @@
 import { PROJECTS_URL, displayNetworkError } from './apiHelpers';
 
 class ProjectApi {
-  static getProjects() {
-    return fetch(PROJECTS_URL).then(response =>
+  static getProjects({ approved }) {
+    let projectsUrl = PROJECTS_URL;
+    if (typeof approved != 'undefined') {
+      // `approved` is either set to true or false
+      projectsUrl += '?approved=' + String(approved);
+    }
+
+    return fetch(projectsUrl).then(response =>
       response.json().then(projects =>
         ({ projects, response })
       )

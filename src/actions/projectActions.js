@@ -53,9 +53,9 @@ export function loadTags() {
   };
 }
 
-export function loadProjects() {
+export function loadProjects({ approved }) {
   return function(dispatch) {
-    return projectApi.getProjects().then(({ projects, response }) => {
+    return projectApi.getProjects({ approved }).then(({ projects, response }) => {
       if (response.ok) {
         return dispatch(loadProjectsSuccess(projects));
       } else {

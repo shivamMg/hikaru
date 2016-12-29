@@ -13,7 +13,8 @@ const ProjectList = ({ projects, showModifyLinks }) => {
 };
 
 ProjectList.propTypes = {
-  projects: PropTypes.array.isRequired
+  projects: PropTypes.array.isRequired,
+  showModifyLinks: PropTypes.bool
 };
 
 export default ProjectList;

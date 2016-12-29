@@ -8,9 +8,10 @@ import routes from './routes';
 import { loadProjects, loadTags } from './actions/projectActions';
 import './styles/main.css';
 import '../node_modules/toastr/build/toastr.min.css';
+import '../node_modules/semantic-ui-css/semantic.min.css';
 
 const store = configureStore();
-store.dispatch(loadProjects());
+store.dispatch(loadProjects({ approved: true }));
 store.dispatch(loadTags());
 
 render(
