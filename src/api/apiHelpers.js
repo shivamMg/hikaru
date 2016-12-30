@@ -1,8 +1,15 @@
 import toastr from 'toastr';
 
-const URL = 'http://localhost:8000/';
-const AUTH_URL = URL + 'auth/';
-const API_URL = URL + 'api/';
+let apiBaseUrl;
+if (process.env.NODE_ENV === 'production') {
+  apiBaseUrl = process.env.API_BASE_URL;
+} else {
+  apiBaseUrl = 'http://localhost:8000/';
+}
+
+const API_BASE_URL = apiBaseUrl;
+const AUTH_URL = API_BASE_URL + 'auth/';
+const API_URL = API_BASE_URL + 'api/';
 
 export const GET_TOKEN_URL = AUTH_URL + 'get-token/';
 export const REFRESH_TOKEN_URL = AUTH_URL + 'refresh-token/';
