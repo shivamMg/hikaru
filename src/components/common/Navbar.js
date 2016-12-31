@@ -39,7 +39,7 @@ class Navbar extends React.Component {
           name="home"
           active={this.state.activeItem === "home"}
           onClick={this.pageRedirect}
-          content="Home" />
+          content="hikaru" header />
         <Menu.Item
           name="about"
           active={this.state.activeItem === "about"}

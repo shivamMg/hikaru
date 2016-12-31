@@ -5,7 +5,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 const GLOBALS = {
   'process.env': {
     'NODE_ENV': JSON.stringify('production'),
-    'API_BASE_URL': JSON.stringify(process.env.API_BASE_URL || 'http://localhost:8000/')
+    'API_BASE_URL': JSON.stringify(process.env.API_BASE_URL || '/')
   }
 };
 

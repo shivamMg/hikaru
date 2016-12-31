@@ -2,18 +2,24 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'semantic-ui-react';
 import Navbar from './common/Navbar';
+import Footer from './common/Footer';
 
 class App extends React.Component {
   render() {
     const { dispatch, isAuthenticated } = this.props;
 
     return (
+      <div>
       <Container fluid>
         <Navbar
           isAuthenticated={isAuthenticated}
           dispatch={dispatch} />
-        {this.props.children}
+        <div className="inner-container">
+          {this.props.children}
+        </div>
+        <Footer />
       </Container>
+      </div>
     );
   }
 }

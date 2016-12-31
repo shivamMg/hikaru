@@ -44,7 +44,11 @@ export default function auth(state = {
     case types.AUTH_MODAL_OPEN:
       return Object.assign({}, state, { showAuthModal: true });
     case types.AUTH_MODAL_CLOSE:
-      return Object.assign({}, state, { showAuthModal: false });
+      return Object.assign({}, state, {
+        loginErrors: {},
+        signupErrors: {},
+        showAuthModal: false
+      });
 
     default:
       return state;

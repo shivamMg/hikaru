@@ -1,3 +1,7 @@
+.inner-container {
+  min-height: 500px;
+}
+
 .float-right {
   float: right !important;
 }
@@ -9,4 +13,26 @@
 .ui.error.message {
   padding: 8px;
   font-size: 0.9em;
+}
+
+.hikaru-code-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.hikaru-code-link {
+  color: #21BA45;
+  font-size: 4em;
+  transition: all 300ms linear;
+  transition-delay: 500ms;
+  -webkit-transition-delay: 500ms;
+}
+
+.hikaru-code-link:hover {
+  color: #08601d;
+}
+
+.ui.footer.segment {
+  margin: 5em 0em 0em;
+  padding: 5em 0em;
 }
