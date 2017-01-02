@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Header, Button, Container } from 'semantic-ui-react';
 import * as authActions from '../../actions/authActions';
+import * as projectActions from '../../actions/projectActions';
 import ProjectList from './ProjectList';
 import TagsSearch from './TagsSearch';
 import { userIsStaff } from './helpers';
@@ -12,11 +13,23 @@ class ProjectsPage extends React.Component {
     super(props, context);
 
     this.state = {
-      projectList: this.props.projects
+      projectList: this.props.projects,
+      tagSearchValue: []
     };
 
     this.redirectToCreateProjectPage = this.redirectToCreateProjectPage.bind(this);
+    this.redirectToUnapprovedProjectsPage = this.redirectToUnapprovedProjectsPage.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
+    this.handleTagClick = this.handleTagClick.bind(this);
+  }
+
+  componentDidMount() {
+    /* For staff members load projects on mount
+     * since some projects might have been approved
+     */
+    if (userIsStaff()) {
+      this.props.projectActions.loadProjects({ approved: true });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,14 +42,21 @@ class ProjectsPage extends React.Component {
     this.context.router.push('/projects/create');
   }
 
-  handleQueryChange(event, { value }) {
+  redirectToUnapprovedProjectsPage() {
+    this.context.router.push('/projects/unapproved');
+  }
+
+  handleQueryChange(value) {
     // value is the list of searched tags
     const queryTagList = value;
     const projects = Object.assign([], this.props.projects);
 
     // Display all projects for empty query
     if (queryTagList.length == 0) {
-      return this.setState({projectList: projects});
+      return this.setState({
+        projectList: projects,
+        tagSearchValue: queryTagList
+      });
     }
 
     let newProjectList = [];
@@ -51,11 +71,37 @@ class ProjectsPage extends React.Component {
       }
     });
 
-    this.setState({ projectList: newProjectList });
+    this.setState({
+      projectList: newProjectList,
+      tagSearchValue: queryTagList
+    });
+  }
+
+  handleTagClick(event, button) {
+    /* Add tag to search query if it doesn't already exist
+     * Remove tag if it already exists.
+     */
+    event.preventDefault();
+    const selectedTag = button.content;
+    const { tagSearchValue } = this.state;
+    let newTagSearchValue = [];
+
+    tagSearchValue.map(tag => {
+      if (tag != selectedTag) {
+        newTagSearchValue.push(tag);
+      }
+    });
+
+    if (newTagSearchValue.length == tagSearchValue.length) {
+      /* Add selected tag */
+      newTagSearchValue.push(selectedTag);
+    }
+
+    this.handleQueryChange(newTagSearchValue);
   }
 
   render() {
-    const { projectList } = this.state;
+    const { projectList, tagSearchValue } = this.state;
     const { tagSearchOptions, isAuthenticated } = this.props;
 
     return (
@@ -63,8 +109,14 @@ class ProjectsPage extends React.Component {
         <Header size="large" color="grey" content="Gallery" />
 
         {isAuthenticated &&
-          <Button content="Submit Your Project" size="tiny" basic compact color="teal"
-            onClick={this.redirectToCreateProjectPage} />
+          <p>
+            <Button content="Submit Your Project" size="tiny" basic compact color="teal"
+              onClick={this.redirectToCreateProjectPage} />
+            {userIsStaff() &&
+              <Button content="Unapproved Projects" size="tiny" basic compact color="red"
+                onClick={this.redirectToUnapprovedProjectsPage} />
+            }
+          </p>
         }
         {!isAuthenticated &&
           <p>
@@ -73,9 +125,17 @@ class ProjectsPage extends React.Component {
           </p>
         }
 
-        <TagsSearch options={tagSearchOptions} onChange={this.handleQueryChange} />
+        <TagsSearch
+          options={tagSearchOptions}
+          onQueryChange={this.handleQueryChange}
+          value={tagSearchValue}
+        />
 
-        <ProjectList projects={projectList} showModifyLinks={userIsStaff()} />
+        <ProjectList
+          projects={projectList}
+          onTagClick={this.handleTagClick}
+          showModifyLinks={userIsStaff()}
+        />
       </Container>
     );
   }
@@ -83,6 +143,7 @@ class ProjectsPage extends React.Component {
 
 ProjectsPage.propTypes = {
   authActions: PropTypes.object.isRequired,
+  projectActions: PropTypes.object.isRequired,
   projects: PropTypes.array.isRequired,
   tagSearchOptions: PropTypes.array.isRequired,
   isAuthenticated: PropTypes.bool.isRequired
@@ -107,7 +168,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    authActions: bindActionCreators(authActions, dispatch)
+    authActions: bindActionCreators(authActions, dispatch),
+    projectActions: bindActionCreators(projectActions, dispatch)
   };
 }
 

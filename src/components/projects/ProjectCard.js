@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Card, Icon, Button } from 'semantic-ui-react';
 
-const ProjectCard = ({ project, showModifyLinks }) => {
+const ProjectCard = ({ project, onTagClick, showModifyLinks }) => {
   return (
     <Card color="teal">
       <Card.Content>
@@ -29,7 +29,7 @@ const ProjectCard = ({ project, showModifyLinks }) => {
       </Card.Content>
       <Card.Content extra>
         {project.tags.map((tag, i) => {
-          return <Button size="mini" compact content={tag.name} key={i} />;
+          return <Button size="mini" compact content={tag.name} key={i} onClick={onTagClick} />;
         })}
       </Card.Content>
     </Card>
@@ -38,6 +38,7 @@ const ProjectCard = ({ project, showModifyLinks }) => {
 
 ProjectCard.propTypes = {
   project: PropTypes.object.isRequired,
+  onTagClick: PropTypes.func,
   showModifyLinks: PropTypes.bool
 };
 
