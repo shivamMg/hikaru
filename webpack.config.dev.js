@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
   debug: true,
@@ -19,6 +20,10 @@ export default {
     contentBase: path.resolve(__dirname, 'src')
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      inject: true
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],

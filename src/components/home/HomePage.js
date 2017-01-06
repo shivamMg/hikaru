@@ -7,14 +7,15 @@ class HomePage extends React.Component {
     return (
       <Container>
         <br/><br />
-        <Image src={require('../../images/hikaru.png')}  alt="hikaru" size="large" centered />
+        <Header size="huge" className="hikaru-home" textAlign="center">
+          hikaru
+        </Header>
 
         <Grid columns="equal">
           <Grid.Column>
-            <Header floated="right" size="large" content={<Link to="about">About</Link>} />
-          </Grid.Column>
-          <Grid.Column>
-            <Header floated="left" size="large" content={<Link to="projects">Gallery</Link>} />
+            <Header size="medium" textAlign="center" color="grey" className="hikaru-home-subheader">
+              Projects Showcase <Link to="projects">Gallery</Link> for peeps at <a href="http://devup.in" target="_blank">Dev Up</a>
+            </Header>
           </Grid.Column>
         </Grid>
 

@@ -10,15 +10,19 @@ class App extends React.Component {
 
     return (
       <div>
-      <Container fluid>
-        <Navbar
-          isAuthenticated={isAuthenticated}
-          dispatch={dispatch} />
-        <div className="inner-container">
-          {this.props.children}
+        <div className="wrapper">
+          <Container fluid>
+            <Navbar
+              isAuthenticated={isAuthenticated}
+              dispatch={dispatch} />
+              {this.props.children}
+          </Container>
+
+          <div className="push"></div>
         </div>
-        <Footer />
-      </Container>
+        <div className="footer">
+          <Footer />
+        </div>
       </div>
     );
   }

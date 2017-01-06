@@ -4,6 +4,7 @@ import { Header, Modal, Grid, Message, Icon, Button, Segment, Form } from 'seman
 const ProjectForm = ({ project, onSubmit, onChange, loading, errors, showApproveField, showDeleteButton, onDelete }) => {
   return (
   <div>
+    <Segment>
     <Form onSubmit={onSubmit} error>
       <Message error content={errors.non_field_errors} />
 
@@ -43,6 +44,7 @@ const ProjectForm = ({ project, onSubmit, onChange, loading, errors, showApprove
 
       <Form.Button type="submit" color="green" content="Submit" />
     </Form>
+    </Segment>
 
     {showDeleteButton &&
       <Modal trigger={<Button color="red" content="Delete Project" icon="trash" />} basic size="small" closeIcon="close">
@@ -57,7 +59,7 @@ const ProjectForm = ({ project, onSubmit, onChange, loading, errors, showApprove
         </Modal.Actions>
       </Modal>
     }
-    </div>
+  </div>
   );
 };
 

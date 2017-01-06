@@ -1,20 +1,21 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import { List, Container, Segment, Header } from 'semantic-ui-react';
 
 const Footer = () => {
   return (
-    <Segment vertical inverted className="footer">
+    <Segment vertical >
       <Container>
-        <Header size="medium" inverted content="hikaru" />
-        <List size="small" inverted horizontal divided link>
+        <Header size="medium" className="hikaru-footer">
+          <Link to="">hikaru</Link>
+        </Header>
+
+        <List size="small" horizontal divided link>
           <List.Item>
-            About
+            <Link to="projects">Gallery</Link>
           </List.Item>
           <List.Item>
-            Gallery
-          </List.Item>
-          <List.Item>
-            Devup.in
+            Maintained by folks at <a href="http://devup.in/" target="_blank">Dev Up</a>
           </List.Item>
         </List>
       </Container>

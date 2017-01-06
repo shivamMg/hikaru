@@ -1,5 +1,90 @@
-.inner-container {
-  min-height: 500px;
+* {
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  /* New Year Background by Mustafa BAL (http://www.mustafabal.co)
+   * Under  CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)
+   */
+  background: url(../images/new_year_background.png) repeat !important;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -7em;
+  padding-bottom: 30px;
+}
+
+.footer, .push {
+  height: 7em;
+}
+
+.footer {
+  padding-top: 10px;
+}
+
+@font-face {
+  font-family: 'Aclonica';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/Aclonica.ttf);
+}
+
+.ui.header.hikaru-navbar {
+  font-family: 'Aclonica', sans-serif;
+  font-weight: 400 !important;
+  margin-top: 3px !important;
+}
+
+.ui.header.hikaru-home {
+  font-family: 'Aclonica', sans-serif;
+  font-size: 8em !important;
+  color: #21BA45;
+  text-shadow: 1px 1px 2px black;
+}
+
+.ui.header.hikaru-home-subheader {
+  font-weight: 400;
+}
+
+.ui.header.hikaru-home-subheader a {
+  color: #21BA45;
+}
+
+.ui.header.hikaru-home-subheader a:hover {
+  color: #189635;
+}
+
+.hikaru-code-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.hikaru-code-link {
+  color: #607d8b;
+  font-size: 3em;
+  transition: all 300ms linear;
+  transition-delay: 500ms;
+  -webkit-transition-delay: 500ms;
+}
+
+.hikaru-code-link:hover {
+  color: #37474f;
+}
+
+.ui.header.hikaru-footer {
+  margin-bottom: 0;
+  font-family: 'Aclonica', sans-serif;
+}
+
+.ui.header.hikaru-footer a {
+  color: #21BA45;
 }
 
 .float-right {
@@ -15,24 +100,13 @@
   font-size: 0.9em;
 }
 
-.hikaru-code-container {
-  margin-top: 40px;
-  text-align: center;
+.ui.basic.teal.button.tag-button:hover {
+  background: #00B5AD !important;
+  color: #ffffff !important;
 }
 
-.hikaru-code-link {
-  color: #21BA45;
-  font-size: 4em;
-  transition: all 300ms linear;
-  transition-delay: 500ms;
-  -webkit-transition-delay: 500ms;
-}
-
-.hikaru-code-link:hover {
-  color: #08601d;
-}
-
-.ui.footer.segment {
-  margin: 5em 0em 0em;
-  padding: 5em 0em;
+.ui.multiple.dropdown > .label {
+  background-color: #ffffff;
+  color: #546e7a;
+  font-weight: 400;
 }

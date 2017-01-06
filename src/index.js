@@ -7,9 +7,9 @@ import { Router, browserHistory } from 'react-router';
 import configureStore from './store/configureStore';
 import routes from './routes';
 import { loadProjects, loadTags } from './actions/projectActions';
-import './styles/main.css';
 import '../node_modules/toastr/build/toastr.min.css';
 import '../node_modules/semantic-ui-css/semantic.min.css';
+import './styles/main.css';
 
 const store = configureStore();
 store.dispatch(loadProjects({ approved: true }));

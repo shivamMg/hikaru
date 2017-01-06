@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const GLOBALS = {
   'process.env': {
@@ -13,17 +14,39 @@ export default {
   debug: true,
   devtool: 'source-map',
   noInfo: false,
-  entry: path.resolve(__dirname, 'src/index'),
+  entry: {
+    vendor: path.resolve(__dirname, 'src/vendor'),
+    app: path.resolve(__dirname, 'src/index')
+  },
   target: 'web',
   output: {
     path: __dirname + '/dist',
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: '[name].js'
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist')
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin(GLOBALS),
     new ExtractTextPlugin('styles.css'),

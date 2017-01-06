@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Menu, Button } from 'semantic-ui-react';
+import { Header, Menu, Button } from 'semantic-ui-react';
 import LoginSignupModal from './LoginSignup';
 import { openAuthModal, logoutUser } from '../../actions/authActions';
 
@@ -26,8 +26,6 @@ class Navbar extends React.Component {
     } else {
       this.context.router.push('/' + item.name);
     }
-
-    return this.setState({ activeItem: item.name });
   }
 
   render() {
@@ -35,21 +33,19 @@ class Navbar extends React.Component {
 
     return (
       <Menu>
-        <Menu.Item
-          name="home"
-          active={this.state.activeItem === "home"}
-          onClick={this.pageRedirect}
-          content="hikaru" header />
-        <Menu.Item
-          name="about"
-          active={this.state.activeItem === "about"}
-          onClick={this.pageRedirect}
-          content="About" />
-        <Menu.Item
-          name="projects"
-          active={this.state.activeItem === "projects"}
-          onClick={this.pageRedirect}
-          content="Gallery" />
+        <Menu.Item name="home" onClick={this.pageRedirect}>
+          <Header className="hikaru-navbar" color="grey" content="hikaru" />
+        </Menu.Item>
+        <Menu.Item name="projects" onClick={this.pageRedirect}>
+          Gallery
+        </Menu.Item>
+
+        {isAuthenticated &&
+          <Menu.Item name="projects/create" onClick={this.pageRedirect}>
+            Submit Project
+          </Menu.Item>
+        }
+
         <Menu.Menu position="right">
           <LoginSignupModal />
 
@@ -63,7 +59,7 @@ class Navbar extends React.Component {
             <Menu.Menu position="right">
               <Menu.Item content={this.getUsername()} />
               <Menu.Item>
-                <Button compact icon="sign out" content="Logout"
+                <Button compact basic grey icon="sign out" content="Logout"
                   onClick={function() { dispatch(logoutUser()); }} />
               </Menu.Item>
             </Menu.Menu>

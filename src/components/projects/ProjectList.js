@@ -2,15 +2,18 @@ import React, {PropTypes} from 'react';
 import ProjectCard from './ProjectCard';
 import { Card } from 'semantic-ui-react';
 
+const CardColors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown'];
+
 const ProjectList = ({ projects, onTagClick, showModifyLinks }) => {
   return (
     <Card.Group stackable itemsPerRow={3} className="margin-top-10">
-      {projects.map(project =>
+      {projects.map(( project, index ) =>
         <ProjectCard
-          key={project.id}
+          key={index}
           project={project}
           onTagClick={onTagClick}
           showModifyLinks={showModifyLinks}
+          cardColor={CardColors[CardColors.length % project.id]}
         />
       )}
     </Card.Group>
