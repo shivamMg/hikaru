@@ -31,6 +31,8 @@ export default {
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       inject: true,
+      favicon: 'src/images/favicon.png',
+      title: 'Hikaru &middot; DevUp Gallery',
       minify: {
         removeComments: true,
         collapseWhitespace: true,

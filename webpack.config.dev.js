@@ -22,7 +22,9 @@ export default {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.html',
-      inject: true
+      inject: true,
+      favicon: 'src/images/favicon.png',
+      title: 'Hikaru &middot; DevUp Gallery'
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()

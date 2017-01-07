@@ -10,6 +10,7 @@ import { loadProjects, loadTags } from './actions/projectActions';
 import '../node_modules/toastr/build/toastr.min.css';
 import '../node_modules/semantic-ui-css/semantic.min.css';
 import './styles/main.css';
+import './images/favicon.png';
 
 const store = configureStore();
 store.dispatch(loadProjects({ approved: true }));
