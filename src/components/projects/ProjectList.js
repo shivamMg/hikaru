@@ -13,7 +13,7 @@ const ProjectList = ({ projects, onTagClick, showModifyLinks }) => {
           project={project}
           onTagClick={onTagClick}
           showModifyLinks={showModifyLinks}
-          cardColor={CardColors[CardColors.length % project.id]}
+          cardColor={CardColors[project.id % CardColors.length]}
         />
       )}
     </Card.Group>

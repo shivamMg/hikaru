@@ -4,7 +4,7 @@ import { Card, Icon, Button } from 'semantic-ui-react';
 
 const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
   return (
-    <Card color={cardColor}>
+    <Card color={cardColor} className="project-card">
       <Card.Content>
         <div className="float-right">
           {showModifyLinks &&
