@@ -3,6 +3,14 @@ import { Link } from 'react-router';
 import { Card, Icon, Button } from 'semantic-ui-react';
 
 const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
+  let websiteLink = '';
+  /* For empty website links use source link */
+  if (project.websiteLink === '') {
+    websiteLink = project.sourceLink;
+  } else {
+    websiteLink = project.websiteLink;
+  }
+
   return (
     <Card color={cardColor} className="project-card">
       <Card.Content>
@@ -18,10 +26,15 @@ const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
         </div>
 
         <Card.Header>
-          <a href={project.websiteLink} target="_blank">{project.name}</a>
+          <a href={websiteLink} target="_blank">{project.name}</a>
         </Card.Header>
         <Card.Meta>
-          By <a href={project.authorLink} target="_blank">{project.author}</a>
+          {project.authorLink &&
+            <div>By <a href={project.authorLink} target="_blank">{project.author}</a></div>
+          }
+          {!project.authorLink &&
+            <div>By {project.author}</div>
+          }
         </Card.Meta>
         <Card.Description>
           {project.description}

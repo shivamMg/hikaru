@@ -1,12 +1,45 @@
 import React, { PropTypes }  from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Header, Button, Container } from 'semantic-ui-react';
+import { Dropdown, Grid, Header, Button, Container } from 'semantic-ui-react';
+import { knuthShuffle } from 'knuth-shuffle';
 import * as authActions from '../../actions/authActions';
 import * as projectActions from '../../actions/projectActions';
 import ProjectList from './ProjectList';
 import TagsSearch from './TagsSearch';
 import { userIsStaff } from './helpers';
+
+const sortingOptions = [
+  { text: 'Random', value: 'random' },
+  { text: 'Newest', value: 'created-des'},
+  { text: 'Oldest', value: 'created-asc'}
+];
+
+/* Helper function to sort projects by date (Schwartzian transform) */
+const sortByDate = (projects, rev = false) => {
+  // Create a tempList with calculated date (secs from epoch)
+  let tempList = [];
+  projects.map((project, i) => {
+    tempList.push({
+      index: i,
+      date: Date.parse(project.created_at)
+    });
+  });
+
+  // Sort tempList based on date
+  tempList.sort((a, b) => {
+    const diff = a.date - b.date;
+    return (rev) ? -diff : diff;
+  });
+
+  // Calculate new projects list
+  let newProjects = [];
+  tempList.map((a) => {
+    newProjects.push(projects[a.index]);
+  });
+
+  return newProjects;
+};
 
 class ProjectsPage extends React.Component {
   constructor(props, context) {
@@ -21,6 +54,7 @@ class ProjectsPage extends React.Component {
     this.redirectToUnapprovedProjectsPage = this.redirectToUnapprovedProjectsPage.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleTagClick = this.handleTagClick.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this);
   }
 
   componentDidMount() {
@@ -100,6 +134,22 @@ class ProjectsPage extends React.Component {
     this.handleQueryChange(newTagSearchValue);
   }
 
+  handleSortChange(event, { value }) {
+    let projectList = Object.assign([], this.state.projectList);
+
+    if (value === 'created-asc') {
+      /* oldest */
+      projectList = sortByDate(projectList);
+    } else if (value === 'created-des') {
+      /* newest */
+      projectList = sortByDate(projectList, true);
+    } else if (value === 'random') {
+      projectList = knuthShuffle(projectList);
+    }
+
+    this.setState({ projectList });
+  }
+
   render() {
     const { projectList, tagSearchValue } = this.state;
     const { tagSearchOptions, isAuthenticated } = this.props;
@@ -125,11 +175,24 @@ class ProjectsPage extends React.Component {
           </p>
         }
 
-        <TagsSearch
-          options={tagSearchOptions}
-          onQueryChange={this.handleQueryChange}
-          value={tagSearchValue}
-        />
+        <div className="margin-top-10">
+          <Grid stackable>
+            <Grid.Column width={10}>
+              <TagsSearch
+                options={tagSearchOptions}
+                onQueryChange={this.handleQueryChange}
+                value={tagSearchValue}
+              />
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <Dropdown placeholder="Sort" selection fluid
+                options={sortingOptions}
+                onChange={this.handleSortChange}
+                defaultValue="random"
+              />
+            </Grid.Column>
+          </Grid>
+        </div>
 
         <ProjectList
           projects={projectList}

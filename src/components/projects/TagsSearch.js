@@ -25,13 +25,11 @@ class TagsSearch extends React.Component {
     const { value } = this.state;
 
     return (
-      <div className="margin-top-10">
-        <Dropdown placeholder="Search Tags" fluid multiple search selection
-          options={options}
-          onChange={this.handleChange}
-          value={value}
-        />
-      </div>
+      <Dropdown placeholder="Search Tags" fluid multiple search selection
+        options={options}
+        onChange={this.handleChange}
+        value={value}
+      />
     );
   }
 }

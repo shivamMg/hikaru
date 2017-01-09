@@ -1,3 +1,4 @@
+import { knuthShuffle } from 'knuth-shuffle';
 import { displayRequestError, requestFailure } from './actionHelpers';
 import * as types from './actionTypes';
 import projectApi from '../api/projectApi';
@@ -57,7 +58,9 @@ export function loadProjects({ approved }) {
   return function(dispatch) {
     return projectApi.getProjects({ approved }).then(({ projects, response }) => {
       if (response.ok) {
-        return dispatch(loadProjectsSuccess(projects));
+        /* Shuffle projects */
+        const randProjects = knuthShuffle(projects);
+        return dispatch(loadProjectsSuccess(randProjects));
       } else {
         displayRequestError();
         return dispatch(requestFailure());
