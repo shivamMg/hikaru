@@ -7,7 +7,7 @@ class Navbar extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = {activeItem: ''};
+    this.state = { activeItem: '' };
 
     this.pageRedirect = this.pageRedirect.bind(this);
     this.getUsername = this.getUsername.bind(this);

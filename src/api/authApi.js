@@ -19,7 +19,7 @@ class AuthApi {
     ).catch(displayNetworkError);
   }
 
-  static verfiyToken() {
+  static verifyToken() {
     const token = localStorage.getItem('token');
     const payload = { token };
     let config = {
@@ -29,7 +29,9 @@ class AuthApi {
     };
 
     return fetch(VERIFY_TOKEN_URL, config).then(response =>
-      response.ok
+      response.json().then(msg =>
+        ({ msg, response })
+      )
     ).catch(displayNetworkError);
   }
 

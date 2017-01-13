@@ -1,6 +1,5 @@
 import webpack from 'webpack';
 import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
   debug: true,
@@ -20,12 +19,6 @@ export default {
     contentBase: path.resolve(__dirname, 'src')
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      inject: true,
-      favicon: 'src/images/favicon.png',
-      title: 'Hikaru &middot; DevUp Gallery'
-    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],

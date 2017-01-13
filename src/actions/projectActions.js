@@ -1,6 +1,8 @@
 import { knuthShuffle } from 'knuth-shuffle';
-import { displayRequestError, requestFailure } from './actionHelpers';
+import { displayLoginAgain, displayRequestError, requestFailure } from './actionHelpers';
 import * as types from './actionTypes';
+import { logoutUser, openAuthModal } from './authActions';
+import authApi from '../api/authApi';
 import projectApi from '../api/projectApi';
 import tagApi from '../api/tagApi';
 
@@ -84,18 +86,28 @@ export function loadProject(projectId) {
 
 export function createProject(project) {
   return function (dispatch, getState) {
-    return projectApi.createProject(project).then(({ project, response }) => {
+    /* Verify token before creating project */
+    return authApi.verifyToken().then(({ response }) => {
       if (!response.ok) {
-        if (response.status === 400) {
-          /* Send validation errors to form */
-          const errors = project;
-          return dispatch(createProjectFailure(errors));
-        } else {
-          displayRequestError();
-          return dispatch(requestFailure());
-        }
+        /* Invalid token */
+        dispatch(logoutUser());
+        displayLoginAgain();
+        return dispatch(openAuthModal());
       } else {
-        return dispatch(createProjectSuccess(project));
+        return projectApi.createProject(project).then(({ project, response }) => {
+          if (!response.ok) {
+            if (response.status === 400) {
+              /* Send validation errors to form */
+              const errors = project;
+              return dispatch(createProjectFailure(errors));
+            } else {
+              displayRequestError();
+              return dispatch(requestFailure());
+            }
+          } else {
+            return dispatch(createProjectSuccess(project));
+          }
+        });
       }
     });
   };
@@ -103,18 +115,28 @@ export function createProject(project) {
 
 export function modifyProject(project) {
   return function (dispatch, getState) {
-    return projectApi.modifyProject(project).then(({ project, response }) => {
+    /* Verify token before modifying project */
+    return authApi.verifyToken().then(({ response }) => {
       if (!response.ok) {
-        if (response.status === 400) {
-          /* Send validation errors to form */
-          const errors = project;
-          return dispatch(modifyProjectFailure(errors));
-        } else {
-          displayRequestError();
-          return dispatch(requestFailure());
-        }
+        /* Invalid token */
+        dispatch(logoutUser());
+        displayLoginAgain();
+        return dispatch(openAuthModal());
       } else {
-        return dispatch(modifyProjectSuccess(project));
+        return projectApi.modifyProject(project).then(({ project, response }) => {
+          if (!response.ok) {
+            if (response.status === 400) {
+              /* Send validation errors to form */
+              const errors = project;
+              return dispatch(modifyProjectFailure(errors));
+            } else {
+              displayRequestError();
+              return dispatch(requestFailure());
+            }
+          } else {
+            return dispatch(modifyProjectSuccess(project));
+          }
+        });
       }
     });
   };
@@ -122,14 +144,24 @@ export function modifyProject(project) {
 
 export function deleteProject(project) {
   return function (dispatch, getState) {
-    return projectApi.deleteProject(project).then(({ project, response }) => {
+    /* Verify token before deleting project */
+    return authApi.verifyToken().then(({ response }) => {
       if (!response.ok) {
-        displayRequestError();
-        return dispatch(requestFailure());
-        // const errors = project;
-        // return dispatch(deleteProjectFailure(errors));
+        /* Invalid token */
+        dispatch(logoutUser());
+        displayLoginAgain();
+        return dispatch(openAuthModal());
       } else {
-        return dispatch(deleteProjectSuccess(project));
+        return projectApi.deleteProject(project).then(({ project, response }) => {
+          if (!response.ok) {
+            displayRequestError();
+            return dispatch(requestFailure());
+            // const errors = project;
+            // return dispatch(deleteProjectFailure(errors));
+          } else {
+            return dispatch(deleteProjectSuccess(project));
+          }
+        });
       }
     });
   };
