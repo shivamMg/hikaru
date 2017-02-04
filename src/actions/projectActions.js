@@ -1,4 +1,3 @@
-import { knuthShuffle } from 'knuth-shuffle';
 import { displayLoginAgain, displayRequestError, requestFailure } from './actionHelpers';
 import * as types from './actionTypes';
 import { logoutUser, openAuthModal } from './authActions';
@@ -60,9 +59,7 @@ export function loadProjects({ approved }) {
   return function(dispatch) {
     return projectApi.getProjects({ approved }).then(({ projects, response }) => {
       if (response.ok) {
-        /* Shuffle projects */
-        const randProjects = knuthShuffle(projects);
-        return dispatch(loadProjectsSuccess(randProjects));
+        return dispatch(loadProjectsSuccess(projects));
       } else {
         displayRequestError();
         return dispatch(requestFailure());

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Card, Icon, Button } from 'semantic-ui-react';
+import { Reveal, Image, Card, Icon, Button } from 'semantic-ui-react';
 
 const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
   let websiteLink = '';
@@ -37,7 +37,16 @@ const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
           }
         </Card.Meta>
         <Card.Description>
-          {project.description}
+          <Reveal animated="fade">
+            <Reveal.Content visible>
+              <Image src={project.photo} bordered fluid />
+            </Reveal.Content>
+            <Reveal.Content hidden>
+              <div style={{ "margin-left": "1px" }}>
+                <div>{project.description}</div>
+              </div>
+            </Reveal.Content>
+          </Reveal>
         </Card.Description>
       </Card.Content>
       <Card.Content extra>

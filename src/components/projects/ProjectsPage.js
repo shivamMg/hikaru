@@ -10,8 +10,8 @@ import { userIsStaff, sortProjects } from './helpers';
 
 const sortingOptions = [
   { text: 'Random', value: 'random' },
-  { text: 'Newest', value: 'created-des'},
-  { text: 'Oldest', value: 'created-asc'}
+  { text: 'Newest Additions', value: 'created-des'},
+  { text: 'Oldest Additions', value: 'created-asc'}
 ];
 
 class ProjectsPage extends React.Component {
@@ -21,7 +21,7 @@ class ProjectsPage extends React.Component {
     this.state = {
       projectList: this.props.projects,
       tagSearchValue: [],
-      sortValue: 'random'
+      sortValue: 'created-des'
     };
 
     this.redirectToCreateProjectPage = this.redirectToCreateProjectPage.bind(this);

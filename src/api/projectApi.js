@@ -24,7 +24,6 @@ class ProjectApi {
   }
 
   static createProject(project) {
-    // TODO: Verify token before request
     const token = localStorage.getItem('token');
     const payload = Object.assign({}, project);
     let config = {
@@ -44,7 +43,6 @@ class ProjectApi {
   }
 
   static modifyProject(project) {
-    // TODO: Verify token before request
     const token = localStorage.getItem('token');
     const payload = Object.assign({}, project);
     let config = {
@@ -65,7 +63,6 @@ class ProjectApi {
   }
 
   static deleteProject(project) {
-    // TODO: Verify token before request
     const token = localStorage.getItem('token');
     let config = {
       method: 'DELETE',
