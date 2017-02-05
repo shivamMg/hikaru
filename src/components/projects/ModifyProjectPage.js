@@ -25,7 +25,8 @@ class ModifyProjectPage extends React.Component {
       },
       errors: {},
       isModified: false,
-      isDeleted: false
+      isDeleted: false,
+      isLoadingForm: false
     };
 
     this.updateProjectState = this.updateProjectState.bind(this);
@@ -56,7 +57,8 @@ class ModifyProjectPage extends React.Component {
     this.setState({
       errors: nextProps.errors,
       isModified: nextProps.isModified,
-      isDeleted: nextProps.isDeleted
+      isDeleted: nextProps.isDeleted,
+      isLoadingForm: nextProps.isLoadingForm
     });
   }
 
@@ -100,7 +102,7 @@ class ModifyProjectPage extends React.Component {
   }
 
   render() {
-    const { project, errors } = this.state;
+    const { project, errors, isLoadingForm } = this.state;
 
     return (
       <Container>
@@ -112,7 +114,9 @@ class ModifyProjectPage extends React.Component {
           project={project}
           showApproveField
           showDeleteButton
-          onDelete={this.deleteProject} />
+          onDelete={this.deleteProject}
+          isLoadingForm={isLoadingForm}
+        />
       </Container>
     );
   }
@@ -125,7 +129,8 @@ ModifyProjectPage.propTypes = {
   actions: PropTypes.object.isRequired,
   isModified: PropTypes.bool.isRequired,
   isDeleted: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  isLoadingForm: PropTypes.bool.isRequired
 };
 
 ModifyProjectPage.contextTypes = {
@@ -134,7 +139,7 @@ ModifyProjectPage.contextTypes = {
 
 function mapStateToProps(state, ownProps) {
   const projectId = parseInt(ownProps.params.id);
-  const { project, errors, isModified, isDeleted } = state.projects;
+  const { project, errors, isModified, isDeleted, isLoadingForm } = state.projects;
 
   return {
     projectId,
@@ -142,7 +147,8 @@ function mapStateToProps(state, ownProps) {
     errors,
     isModified,
     isDeleted,
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isLoadingForm
   };
 }
 

@@ -6,7 +6,8 @@ export default function projectReducer(state = {
     isCreated: false,
     isModified: false,
     isDeleted: false,
-    project: {}
+    project: {},
+    isLoadingForm: false
   }, action) {
 
   switch(action.type) {
@@ -21,28 +22,40 @@ export default function projectReducer(state = {
         isModified: false
       });
 
+    case types.CREATE_PROJECT_REQUEST:
+      return Object.assign({}, state, {
+        isLoadingForm: true
+      });
     case types.CREATE_PROJECT_SUCCESS:
       return Object.assign({}, state, {
         project: action.project,
         errors: {},
-        isCreated: true
+        isCreated: true,
+        isLoadingForm: false
       });
     case types.CREATE_PROJECT_FAILURE:
       return Object.assign({}, state, {
         errors: action.errors,
-        isCreated: false
+        isCreated: false,
+        isLoadingForm: false
       });
 
+    case types.MODIFY_PROJECT_REQUEST:
+      return Object.assign({}, state, {
+        isLoadingForm: true
+      });
     case types.MODIFY_PROJECT_SUCCESS:
       return Object.assign({}, state, {
         project: action.project,
         errors: {},
-        isModified: true
+        isModified: true,
+        isLoadingForm: false
       });
     case types.MODIFY_PROJECT_FAILURE:
       return Object.assign({}, state, {
         errors: action.errors,
-        isModified: false
+        isModified: false,
+        isLoadingForm: false
       });
 
     case types.DELETE_PROJECT_SUCCESS:

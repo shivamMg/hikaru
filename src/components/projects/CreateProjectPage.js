@@ -22,7 +22,8 @@ class CreateProjectPage extends React.Component {
       },
       errors: {},
       isCreated: false,
-      showModal: false
+      showModal: false,
+      isLoadingForm: false
     };
 
     this.updateProjectState = this.updateProjectState.bind(this);
@@ -39,7 +40,8 @@ class CreateProjectPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       errors: nextProps.errors,
-      isCreated: nextProps.isCreated
+      isCreated: nextProps.isCreated,
+      isLoadingForm: nextProps.isLoadingForm
     });
   }
 
@@ -66,7 +68,8 @@ class CreateProjectPage extends React.Component {
       if (this.state.isCreated) {
         this.setState({
           showModal: true,
-          isCreated: false
+          isCreated: false,
+          isLoadingForm: false
         });
       }
     });
@@ -78,7 +81,7 @@ class CreateProjectPage extends React.Component {
   }
 
   render() {
-    const { project, showModal, errors } = this.state;
+    const { project, showModal, errors, isLoadingForm } = this.state;
 
     return (
       <Container>
@@ -87,7 +90,8 @@ class CreateProjectPage extends React.Component {
           onSubmit={this.createProject}
           onChange={this.updateProjectState}
           errors={errors}
-          project={project} />
+          project={project}
+          isLoadingForm={isLoadingForm} />
 
         <Modal basic size="small" open={showModal}>
           <Header color="green" content="Project submitted successfully" />
@@ -107,7 +111,8 @@ CreateProjectPage.propTypes = {
   errors: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   isCreated: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  isLoadingForm: PropTypes.bool.isRequired
 };
 
 CreateProjectPage.contextTypes = {
@@ -118,7 +123,8 @@ function mapStateToProps(state, ownProps) {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     errors: state.projects.errors,
-    isCreated: state.projects.isCreated
+    isCreated: state.projects.isCreated,
+    isLoadingForm: state.projects.isLoadingForm
   };
 }
 

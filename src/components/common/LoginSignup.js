@@ -12,7 +12,9 @@ class LoginSignupModal extends React.Component {
       passwordsMatch: true,
       loginErrors: {},
       signupErrors: {},
-      showAuthModal: false
+      showAuthModal: false,
+      isFetchingLogin: false,
+      isFetchingSignup: false
     };
 
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
@@ -21,12 +23,14 @@ class LoginSignupModal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { loginErrors, signupErrors, showAuthModal } = nextProps;
+    const { loginErrors, signupErrors, showAuthModal, isFetchingLogin, isFetchingSignup } = nextProps;
 
     this.setState({
       loginErrors,
       signupErrors,
-      showAuthModal
+      showAuthModal,
+      isFetchingLogin,
+      isFetchingSignup
     });
   }
 
@@ -58,7 +62,7 @@ class LoginSignupModal extends React.Component {
 
   render() {
     const { loginErrors, signupErrors } = this.props;
-    const { showAuthModal } = this.state;
+    const { showAuthModal, isFetchingLogin, isFetchingSignup } = this.state;
 
     return (
       <Modal basic size="small" open={showAuthModal} closeOnRootNodeClick closeOnEscape onClose={this.handleModalClose}>
@@ -77,7 +81,7 @@ class LoginSignupModal extends React.Component {
                   error={loginErrors.password ? true : false} />
                 <Message error list={loginErrors.password} />
 
-                <Button type="submit" color="green" content="Login" />
+                <Button type="submit" color="green" content="Login" loading={isFetchingLogin} />
               </Form>
             </Segment>
           </Grid.Column>
@@ -99,7 +103,7 @@ class LoginSignupModal extends React.Component {
                 {!this.state.passwordsMatch &&
                   <Message error content="Passwords don't match." />
                 }
-                <Button type="submit" color="green" content="Signup" />
+                <Button type="submit" color="green" content="Signup" loading={isFetchingSignup}/>
               </Form>
             </Segment>
           </Grid.Column>
@@ -113,16 +117,20 @@ LoginSignupModal.propTypes = {
   actions: PropTypes.object.isRequired,
   loginErrors: PropTypes.object,
   signupErrors: PropTypes.object,
-  showAuthModal: PropTypes.bool.isRequired
+  showAuthModal: PropTypes.bool.isRequired,
+  isFetchingLogin: PropTypes.bool.isRequired,
+  isFetchingSignup: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
-  const { loginErrors, signupErrors, showAuthModal } = state.auth;
+  const { loginErrors, signupErrors, showAuthModal, isFetchingLogin, isFetchingSignup } = state.auth;
 
   return {
     loginErrors,
     signupErrors,
-    showAuthModal
+    showAuthModal,
+    isFetchingLogin,
+    isFetchingSignup
   };
 }
 

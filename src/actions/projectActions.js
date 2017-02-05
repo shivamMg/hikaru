@@ -17,12 +17,20 @@ export function loadProjectSuccess(project) {
   return { type: types.LOAD_PROJECT_SUCCESS, project };
 }
 
+export function createProjectRequest() {
+  return { type: types.CREATE_PROJECT_REQUEST };
+}
+
 export function createProjectSuccess(project) {
   return { type: types.CREATE_PROJECT_SUCCESS, project };
 }
 
 export function createProjectFailure(errors) {
   return { type: types.CREATE_PROJECT_FAILURE, errors };
+}
+
+export function modifyProjectRequest() {
+  return { type: types.MODIFY_PROJECT_REQUEST };
 }
 
 export function modifyProjectSuccess(project) {
@@ -91,6 +99,7 @@ export function createProject(project) {
         displayLoginAgain();
         return dispatch(openAuthModal());
       } else {
+        dispatch(createProjectRequest());
         return projectApi.createProject(project).then(({ project, response }) => {
           if (!response.ok) {
             if (response.status === 400) {
@@ -120,6 +129,7 @@ export function modifyProject(project) {
         displayLoginAgain();
         return dispatch(openAuthModal());
       } else {
+        dispatch(modifyProjectRequest());
         return projectApi.modifyProject(project).then(({ project, response }) => {
           if (!response.ok) {
             if (response.status === 400) {

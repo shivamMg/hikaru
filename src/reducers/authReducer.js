@@ -1,7 +1,8 @@
 import * as types from '../actions/actionTypes';
 
 export default function auth(state = {
-    isFetching: false,
+    isFetchingLogin: false,
+    isFetchingSignup: false,
     isAuthenticated: localStorage.getItem('token') ? true : false,
     loginErrors: {},
     signupErrors: {},
@@ -11,35 +12,43 @@ export default function auth(state = {
   switch (action.type) {
     case types.LOGIN_REQUEST:
       return Object.assign({}, state, {
-        isFetching: true,
+        isFetchingLogin: true,
         isAuthenticated: false,
         user: action.creds
       });
     case types.LOGIN_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: false,
+        isFetchingLogin: false,
         isAuthenticated: true,
         loginErrors: {}
       });
     case types.LOGIN_FAILURE:
       return Object.assign({}, state, {
-        isFetching: false,
+        isFetchingLogin: false,
         isAuthenticated: false,
         loginErrors: action.errors
       });
 
     case types.LOGOUT_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: true,
         isAuthenticated: false
       });
 
     case types.SIGNUP_REQUEST:
-      return Object.assign({}, state, { user: action.creds });
+      return Object.assign({}, state, {
+        isFetchingSignup: true,
+        user: action.creds
+      });
     case types.SIGNUP_SUCCESS:
-      return Object.assign({}, state, { signupErrors: {} });
+      return Object.assign({}, state, {
+        isFetchingSignup: false,
+        signupErrors: {}
+      });
     case types.SIGNUP_FAILURE:
-      return Object.assign({}, state, { signupErrors: action.errors });
+      return Object.assign({}, state, {
+        isFetchingSignup: false,
+        signupErrors: action.errors
+      });
 
     case types.AUTH_MODAL_OPEN:
       return Object.assign({}, state, { showAuthModal: true });

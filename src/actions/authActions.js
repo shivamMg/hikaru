@@ -4,67 +4,35 @@ import authApi from '../api/authApi';
 import userApi from '../api/userApi';
 
 function loginRequest(creds) {
-  return {
-    type: types.LOGIN_REQUEST,
-    isFetching: true,
-    isAuthenticated: false,
-    creds
-  };
+  return { type: types.LOGIN_REQUEST, creds };
 }
 
 function loginSuccess(user) {
-  return {
-    type: types.LOGIN_SUCCESS,
-    isFetching: false,
-    isAuthenticated: true,
-    token: user.token
-  };
+  return { type: types.LOGIN_SUCCESS, token: user.token };
 }
 
 function loginFailure(errors) {
-  return {
-    type: types.LOGIN_FAILURE,
-    isFetching: false,
-    isAuthenticated: false,
-    errors
-  };
+  return { type: types.LOGIN_FAILURE, errors };
 }
 
 function logoutRequest() {
-  return {
-    type: types.LOGOUT_REQUEST,
-    isFetching: true,
-    isAuthenticated: true
-  };
+  return { type: types.LOGOUT_REQUEST };
 }
 
 function logoutSuccess() {
-  return {
-    type: types.LOGOUT_SUCCESS,
-    isFetching: false,
-    isAuthenticated: false
-  };
+  return { type: types.LOGOUT_SUCCESS };
 }
 
 function signupRequest(creds) {
-  return {
-    type: types.SIGNUP_REQUEST,
-    creds
-  };
+  return { type: types.SIGNUP_REQUEST, creds };
 }
 
 function signupSuccess(user) {
-  return {
-    type: types.SIGNUP_SUCCESS,
-    username: user.username
-  };
+  return { type: types.SIGNUP_SUCCESS, username: user.username };
 }
 
 function signupFailure(errors) {
-  return {
-    type: types.SIGNUP_FAILURE,
-    errors
-  };
+  return { type: types.SIGNUP_FAILURE, errors };
 }
 
 function openAuthModalAction() {

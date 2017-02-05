@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Header, Modal, Grid, Message, Icon, Button, Segment, Form } from 'semantic-ui-react';
 
-const ProjectForm = ({ project, onSubmit, onChange, loading, errors, showApproveField, showDeleteButton, onDelete }) => {
+const ProjectForm = ({ project, onSubmit, onChange, isLoadingForm, errors, showApproveField, showDeleteButton, onDelete }) => {
   return (
   <div>
     <Segment>
@@ -42,7 +42,7 @@ const ProjectForm = ({ project, onSubmit, onChange, loading, errors, showApprove
         value={project.authorLink} onChange={onChange} error={errors.authorLink ? true : false} />
       <Message error list={errors.authorLink} />
 
-      <Form.Button type="submit" color="green" content="Submit" />
+      <Form.Button type="submit" color="green" content="Submit" loading={isLoadingForm} />
     </Form>
     </Segment>
 
@@ -71,7 +71,8 @@ ProjectForm.propTypes = {
   errors: PropTypes.object,
   showApproveField: PropTypes.bool,
   showDeleteButton: PropTypes.bool,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  isLoadingForm: PropTypes.bool
 };
 
 export default ProjectForm;
