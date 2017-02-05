@@ -91,6 +91,7 @@ export function loadProject(projectId) {
 
 export function createProject(project) {
   return function (dispatch, getState) {
+    dispatch(createProjectRequest());
     /* Verify token before creating project */
     return authApi.verifyToken().then(({ response }) => {
       if (!response.ok) {
@@ -99,7 +100,6 @@ export function createProject(project) {
         displayLoginAgain();
         return dispatch(openAuthModal());
       } else {
-        dispatch(createProjectRequest());
         return projectApi.createProject(project).then(({ project, response }) => {
           if (!response.ok) {
             if (response.status === 400) {
@@ -121,6 +121,7 @@ export function createProject(project) {
 
 export function modifyProject(project) {
   return function (dispatch, getState) {
+    dispatch(modifyProjectRequest());
     /* Verify token before modifying project */
     return authApi.verifyToken().then(({ response }) => {
       if (!response.ok) {
@@ -129,7 +130,6 @@ export function modifyProject(project) {
         displayLoginAgain();
         return dispatch(openAuthModal());
       } else {
-        dispatch(modifyProjectRequest());
         return projectApi.modifyProject(project).then(({ project, response }) => {
           if (!response.ok) {
             if (response.status === 400) {
