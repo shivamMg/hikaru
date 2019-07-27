@@ -45,26 +45,6 @@ class Navbar extends React.Component {
             Submit Project
           </Menu.Item>
         }
-
-        <Menu.Menu position="right">
-          <LoginSignupModal />
-
-          {!isAuthenticated &&
-            <Menu.Item>
-              <Button color="green" content="Login &middot; Signup"
-                onClick={function() { dispatch(openAuthModal()); }} />
-            </Menu.Item>
-          }
-          {isAuthenticated &&
-            <Menu.Menu position="right">
-              <Menu.Item content={this.getUsername()} />
-              <Menu.Item>
-                <Button compact basic grey icon="sign out" content="Logout"
-                  onClick={function() { dispatch(logoutUser()); }} />
-              </Menu.Item>
-            </Menu.Menu>
-          }
-        </Menu.Menu>
       </Menu>
     );
   }

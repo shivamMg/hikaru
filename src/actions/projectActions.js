@@ -65,14 +65,8 @@ export function loadTags() {
 
 export function loadProjects({ approved }) {
   return function(dispatch) {
-    return projectApi.getProjects({ approved }).then(({ projects, response }) => {
-      if (response.ok) {
-        return dispatch(loadProjectsSuccess(projects));
-      } else {
-        displayRequestError();
-        return dispatch(requestFailure());
-      }
-    });
+    console.log(dispatch(loadProjectsSuccess(require('../../projects.json'))));
+    return dispatch(loadProjectsSuccess(require('../../projects.json')));
   };
 }
 
