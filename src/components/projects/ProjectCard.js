@@ -42,7 +42,7 @@ const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
               <Image src={project.photo} bordered fluid />
             </Reveal.Content>
             <Reveal.Content hidden>
-              <div style={{ "margin-left": "1px" }}>
+              <div style={{ marginLeft: "1px" }}>
                 <div>{project.description}</div>
               </div>
             </Reveal.Content>
