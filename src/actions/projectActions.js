@@ -4,6 +4,7 @@ import { logoutUser, openAuthModal } from './authActions';
 import authApi from '../api/authApi';
 import projectApi from '../api/projectApi';
 import tagApi from '../api/tagApi';
+import projects from '../data/projects';
 
 export function loadTagsSuccess(tags) {
   return { type: types.LOAD_TAGS_SUCCESS, tags };
@@ -65,8 +66,7 @@ export function loadTags() {
 
 export function loadProjects({ approved }) {
   return function(dispatch) {
-    console.log(dispatch(loadProjectsSuccess(require('../../projects.json'))));
-    return dispatch(loadProjectsSuccess(require('../../projects.json')));
+    return dispatch(loadProjectsSuccess(projects));
   };
 }
 
