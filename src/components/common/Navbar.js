@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Header, Menu, Button } from 'semantic-ui-react';
-import LoginSignupModal from './LoginSignup';
-import { openAuthModal, logoutUser } from '../../actions/authActions';
 
 class Navbar extends React.Component {
   constructor(props, context) {
