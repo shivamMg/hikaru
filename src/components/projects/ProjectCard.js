@@ -53,7 +53,7 @@ const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
         {project.tags.map((tag, i) => {
           return (
             <Button size="mini" color="teal" compact basic className="tag-button"
-              content={tag.name} key={i} onClick={onTagClick} />
+              content={tag} key={i} onClick={onTagClick} />
           );
         })}
       </Card.Content>
