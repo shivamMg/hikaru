@@ -47,5 +47,5 @@ export const tagList = () => {
   projects.forEach(project => {
     tags = tags.concat(project.tags);
   });
-  return [...new Set(tags)];
+  return [...new Set(tags)].map(name => ({ name }));
 };

@@ -17,7 +17,7 @@ export function loadProjectSuccess(project) {
 
 export function loadTags() {
   return function(dispatch) {
-    return tagList();
+    return dispatch(loadTagsSuccess(tagList()));
   };
 }
 

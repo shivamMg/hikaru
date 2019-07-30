@@ -23,6 +23,6 @@ export default [
     "creator": "bulla",
     "tags": ['javascript', 'html'],
     "created_at": "2019-07-07T17:49:14.325484Z",
-    "photo": 'eg2.png'
+    "photo": null
   }
 ];

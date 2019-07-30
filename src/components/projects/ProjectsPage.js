@@ -148,7 +148,7 @@ ProjectsPage.contextTypes = {
 function mapStateToProps(state, ownProps) {
   let tagSearchOptions = [];
   state.tags.map(tag => {
-    tagSearchOptions.push({ text: tag, value: tag });
+    tagSearchOptions.push({ text: tag.name, value: tag.name });
   });
 
   return {
