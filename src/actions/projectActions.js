@@ -1,7 +1,7 @@
 
 import * as types from './actionTypes';
 import projects from '../data/projects';
-import tagApi from '../api/tagApi';
+import { tagList } from '../components/projects/helpers';
 
 export function loadTagsSuccess(tags) {
   return { type: types.LOAD_TAGS_SUCCESS, tags };
@@ -17,14 +17,7 @@ export function loadProjectSuccess(project) {
 
 export function loadTags() {
   return function(dispatch) {
-    return tagApi.getTags().then(({ tags, response }) => {
-      if (response.ok) {
-        return dispatch(loadTagsSuccess(tags));
-      } else {
-        displayRequestError();
-        return dispatch(requestFailure());
-      }
-    });
+    return tagList();
   };
 }
 

@@ -1,4 +1,5 @@
 import { knuthShuffle } from 'knuth-shuffle';
+import projects from '../../data/projects';
 
 export const userIsStaff = () => {
   const token = localStorage.getItem('token');
@@ -50,4 +51,26 @@ export const sortProjects = (projects, sortValue) => {
   }
 
   return projects;
+};
+
+export const tagList = () => {
+  // let tags = [];
+  // let project = '';
+  // let element = '';
+  // for (project of projects) {
+  //   for (element of project.tags){
+  //     tags.push(element);
+  //   }
+  //   console.log(tags);
+  // }
+  // return tags;
+  let tags = [
+    {
+        "name": "javascript"
+    },
+    {
+        "name": "python"
+    }
+  ];
+return tags;
 };
