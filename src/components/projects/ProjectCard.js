@@ -13,7 +13,7 @@ const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
   }
 
   if (project.photo === null) {
-    photoUrl = require('../../data/eg1.png');
+    photoUrl = require('../../data/hikaru_default.png');
   } else {
     photoUrl = require('../../data/' + project.photo);
   }
