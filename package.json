@@ -1,6 +1,6 @@
 {
   "name": "hikaru",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Projects Gallery",
   "scripts": {
     "start": "npm-run-all --parallel open:src lint:watch",
@@ -14,7 +14,7 @@
     "build": "babel-node tools/build.js",
     "server": "cross-env PORT=3000 babel-node tools/distServer.js"
   },
-  "author": "Shivam Mamgain",
+  "author": "Shivam Mamgain, Kanishk Singh",
   "license": "GPL-3.0",
   "dependencies": {
     "babel-polyfill": "6.8.0",
