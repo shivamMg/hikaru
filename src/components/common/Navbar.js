@@ -8,14 +8,6 @@ class Navbar extends React.Component {
     this.state = { activeItem: '' };
 
     this.pageRedirect = this.pageRedirect.bind(this);
-    this.getUsername = this.getUsername.bind(this);
-  }
-
-  getUsername(event) {
-    const token = localStorage.getItem('token');
-    const base64Payload = atob(token.split('.')[1]);
-    const payload = JSON.parse(base64Payload);
-    return payload.username;
   }
 
   pageRedirect(event, item) {
@@ -27,7 +19,7 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const { dispatch, isAuthenticated } = this.props;
+    const { dispatch } = this.props;
 
     return (
       <Menu>
@@ -37,20 +29,13 @@ class Navbar extends React.Component {
         <Menu.Item name="projects" onClick={this.pageRedirect}>
           Gallery
         </Menu.Item>
-
-        {isAuthenticated &&
-          <Menu.Item name="projects/create" onClick={this.pageRedirect}>
-            Submit Project
-          </Menu.Item>
-        }
       </Menu>
     );
   }
 }
 
 Navbar.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  dispatch: PropTypes.func.isRequired
 };
 
 Navbar.contextTypes = {

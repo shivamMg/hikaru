@@ -5,7 +5,7 @@ import { Dropdown, Grid, Header, Button, Container } from 'semantic-ui-react';
 import * as projectActions from '../../actions/projectActions';
 import ProjectList from './ProjectList';
 import TagsSearch from './TagsSearch';
-import { userIsStaff, sortProjects } from './helpers';
+import {sortProjects } from './helpers';
 
 const sortingOptions = [
   { text: 'Random', value: 'random' },
