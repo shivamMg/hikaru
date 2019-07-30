@@ -5,7 +5,7 @@ import { Dropdown, Grid, Header, Button, Container } from 'semantic-ui-react';
 import * as projectActions from '../../actions/projectActions';
 import ProjectList from './ProjectList';
 import TagsSearch from './TagsSearch';
-import {sortProjects } from './helpers';
+import { sortProjects } from './helpers';
 
 const sortingOptions = [
   { text: 'Random', value: 'random' },
@@ -53,7 +53,7 @@ class ProjectsPage extends React.Component {
     projects.map(project => {
       for (let i = 0; i < project.tags.length; i++) {
         let tag = project.tags[i];
-        if (queryTagList.includes(tag.name)) {
+        if (queryTagList.includes(tag)) {
           newProjectList.push(project);
           break;
         }
@@ -148,13 +148,12 @@ ProjectsPage.contextTypes = {
 function mapStateToProps(state, ownProps) {
   let tagSearchOptions = [];
   state.tags.map(tag => {
-    tagSearchOptions.push({ text: tag.name, value: tag.name });
+    tagSearchOptions.push({ text: tag, value: tag });
   });
 
   return {
     projects: state.projects.projects,
-    tagSearchOptions: tagSearchOptions,
-    isAuthenticated: state.auth.isAuthenticated
+    tagSearchOptions: tagSearchOptions
   };
 }
 

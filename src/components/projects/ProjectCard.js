@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Reveal, Image, Card, Icon, Button } from 'semantic-ui-react';
 
-const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
+const ProjectCard = ({ project, onTagClick, cardColor }) => {
   let websiteLink = '';
   let photoUrl = '';
   /* For empty website links use source link */

@@ -43,23 +43,9 @@ export const sortProjects = (projects, sortValue) => {
 };
 
 export const tagList = () => {
-  // let tags = [];
-  // let project = '';
-  // let element = '';
-  // for (project of projects) {
-  //   for (element of project.tags){
-  //     tags.push(element);
-  //   }
-  //   console.log(tags);
-  // }
-  // return tags;
-  let tags = [
-    {
-        "name": "javascript"
-    },
-    {
-        "name": "python"
-    }
-  ];
-return tags;
+  let tags = [];
+  projects.forEach(project => {
+    tags = tags.concat(project.tags);
+  });
+  return [...new Set(tags)];
 };
