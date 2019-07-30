@@ -1,6 +1,5 @@
 export default [
   {
-    "url": "http://localhost:8000/api/projects/1/",
     "id": 1,
     "name": "Ayy",
     "description": "habla habla habla",
@@ -14,7 +13,6 @@ export default [
     "photo": null
   },
   {
-    "url": "http://localhost:8000/api/projects/1/",
     "id": 2,
     "name": "Lmao",
     "description": "habla habla habla",
