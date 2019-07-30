@@ -4,6 +4,7 @@ import { Reveal, Image, Card, Icon, Button } from 'semantic-ui-react';
 
 const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
   let websiteLink = '';
+  let photoUrl = '';
   /* For empty website links use source link */
   if (project.websiteLink === '') {
     websiteLink = project.sourceLink;
@@ -11,15 +12,16 @@ const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
     websiteLink = project.websiteLink;
   }
 
+  if (project.photo === null) {
+    photoUrl = require('../../data/eg1.png');
+  } else {
+    photoUrl = require('../../data/' + project.photo);
+  }
+
   return (
     <Card color={cardColor} className="project-card">
       <Card.Content>
         <div className="float-right">
-          {showModifyLinks &&
-            <Link to={`/project/${project.id}`}>
-              <Icon name="edit" />
-            </Link>
-          }
           <a href={project.sourceLink} target="_blank">
             <Icon name="code" />
           </a>
@@ -39,7 +41,7 @@ const ProjectCard = ({ project, onTagClick, showModifyLinks, cardColor }) => {
         <Card.Description>
           <Reveal animated="fade">
             <Reveal.Content visible>
-              <Image src={project.photo} bordered fluid />
+              <Image src={photoUrl} bordered fluid />
             </Reveal.Content>
             <Reveal.Content hidden>
               <div style={{ marginLeft: "1px" }}>
