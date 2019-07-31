@@ -4,16 +4,36 @@
 
 Projects Showcase Gallery for peeps at [Devup](http://devup.in)
 
-The projects uses [Naka](https://github.com/shivammg/naka) API server.
+This project is a fork of Shivam Mamgain's [Hikaru](https://github.com/shivammg/hikaru). This project does not make use of the naka backend API like the original but instead, relies on reading project data from a JS File.
 
 ![screenshot](/data/screenshot.png?raw=true)
 
+# Adding a Project to the Gallery
+To list your project in the gallery, follow these steps.
 
-Before building for production the API base URL can be set using `API_BASE_URL` environment variable.
+1. Fork this repo.
+2. Open `src/data/projects.js`
+3. Add your project's info in the below format
+    ```
+    {
+        "id": 1,
+        "name": "Diomedes",
+        "description": "Email alerts for your favorite movies about to hit theaters",
+        "sourceLink": "https://github.com/ArionMiles/diomedes",
+        "websiteLink": "https://diomedes.in",
+        "author": "Kanishk Singh",
+        "authorLink": "https://arionmiles.me/",
+        "creator": "ArionMiles",
+        "tags": ['python', 'django'],
+        "photo": 'diomedes.png'
+    }
+    ```
 
-### Todo
+    - Increment the `"id"` value of your project entry from the previous entry's value by one.
+    - If you do not wish to display an image in the project card, set the `"photo"` value to `null`.
+4. If you add an image, then set the image name as the `"photo"` value and add that image to `/src/data/` directory.
+5. Commit and push these changes to your fork.
+6. Create a Pull Request into this repo.
 
-- [ ] Refresh tokens on page load (API helper already implemented)
-- [x] Add support for Project Images (Implement Project screenshot capture on [Naka](https://github.com/shivammg/naka))
-- [ ] Add [Slack OAuth2](https://api.slack.com/docs/oauth) support
-- [ ] Add Open Graph and Twitter Card meta tags
+# License
+GPL3
