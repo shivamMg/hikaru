@@ -9,7 +9,6 @@ export default [
     "authorLink": "https://arionmiles.me/",
     "creator": "ArionMiles",
     "tags": ['python', 'django'],
-    "created_at": "2019-07-31T21:47:03.404430Z",
     "photo": 'diomedes.png'
   }
 ];
