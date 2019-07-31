@@ -4,5 +4,5 @@ node_js:
 
 deploy:
   provider: surge
-  project: ./dist/
-  domain: devup-gallery.surge.sh 
+  project: ./static/
+  domain: devup-gallery.surge.sh
