@@ -1,15 +1,5 @@
 import { knuthShuffle } from 'knuth-shuffle';
-
-export const userIsStaff = () => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    return false;
-  }
-
-  const base64Payload = atob(token.split('.')[1]);
-  const payload = JSON.parse(base64Payload);
-  return payload.is_staff;
-};
+import projects from '../../data/projects';
 
 /* Helper function to sort projects by date (Schwartzian transform) */
 const sortByDate = (projects, rev = false) => {
@@ -50,4 +40,12 @@ export const sortProjects = (projects, sortValue) => {
   }
 
   return projects;
+};
+
+export const tagList = () => {
+  let tags = [];
+  projects.forEach(project => {
+    tags = tags.concat(project.tags);
+  });
+  return [...new Set(tags)].map(name => ({ name }));
 };

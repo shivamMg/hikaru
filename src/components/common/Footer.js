@@ -15,10 +15,7 @@ const Footer = () => {
             <Link to="projects">Gallery</Link>
           </List.Item>
           <List.Item>
-            <a href="https://github.com/shivammg/hikaru" target="_blank">Source <Icon name="code" /></a>
-          </List.Item>
-          <List.Item>
-            <a href="https://github.com/shivammg/naka" target="_blank">API Server</a>
+            <a href="https://github.com/ArionMiles/hikaru" target="_blank">Source <Icon name="code" /></a>
           </List.Item>
           <List.Item>
             Maintained by folks at <a href="http://devup.in/" target="_blank">Dev Up</a>

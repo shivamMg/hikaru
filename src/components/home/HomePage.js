@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Grid, Header, Icon, Container, Image } from 'semantic-ui-react';
+import { Grid, Header, Icon, Container } from 'semantic-ui-react';
 
 class HomePage extends React.Component {
   render() {
@@ -20,7 +20,7 @@ class HomePage extends React.Component {
         </Grid>
 
         <p className="hikaru-code-container">
-          <a href="http://github.com/shivammg/hikaru" target="_blank" className="hikaru-code-link">
+          <a href="http://github.com/ArionMiles/hikaru" target="_blank" className="hikaru-code-link">
             <Icon name="code" />
           </a>
         </p>

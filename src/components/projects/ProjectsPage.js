@@ -2,11 +2,10 @@ import React, { PropTypes }  from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dropdown, Grid, Header, Button, Container } from 'semantic-ui-react';
-import * as authActions from '../../actions/authActions';
 import * as projectActions from '../../actions/projectActions';
 import ProjectList from './ProjectList';
 import TagsSearch from './TagsSearch';
-import { userIsStaff, sortProjects } from './helpers';
+import { sortProjects } from './helpers';
 
 const sortingOptions = [
   { text: 'Random', value: 'random' },
@@ -24,34 +23,15 @@ class ProjectsPage extends React.Component {
       sortValue: 'created-des'
     };
 
-    this.redirectToCreateProjectPage = this.redirectToCreateProjectPage.bind(this);
-    this.redirectToUnapprovedProjectsPage = this.redirectToUnapprovedProjectsPage.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleTagClick = this.handleTagClick.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
-  }
-
-  componentDidMount() {
-    /* For staff members load projects on mount
-     * since some projects might have been approved
-     */
-    if (userIsStaff()) {
-      this.props.projectActions.loadProjects({ approved: true });
-    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.projects.length > 0) {
       this.setState({ projectList: nextProps.projects });
     }
-  }
-
-  redirectToCreateProjectPage() {
-    this.context.router.push('/projects/create');
-  }
-
-  redirectToUnapprovedProjectsPage() {
-    this.context.router.push('/projects/unapproved');
   }
 
   handleQueryChange(value) {
@@ -73,7 +53,7 @@ class ProjectsPage extends React.Component {
     projects.map(project => {
       for (let i = 0; i < project.tags.length; i++) {
         let tag = project.tags[i];
-        if (queryTagList.includes(tag.name)) {
+        if (queryTagList.includes(tag)) {
           newProjectList.push(project);
           break;
         }
@@ -117,28 +97,15 @@ class ProjectsPage extends React.Component {
 
   render() {
     const { projectList, tagSearchValue } = this.state;
-    const { tagSearchOptions, isAuthenticated } = this.props;
+    const { tagSearchOptions } = this.props;
 
     return (
       <Container>
         <Header size="large" color="grey" content="Gallery" />
-
-        {isAuthenticated &&
-          <p>
-            <Button content="Submit Your Project" size="tiny" basic compact color="teal"
-              onClick={this.redirectToCreateProjectPage} />
-            {userIsStaff() &&
-              <Button content="Unapproved Projects" size="tiny" basic compact color="red"
-                onClick={this.redirectToUnapprovedProjectsPage} />
-            }
-          </p>
-        }
-        {!isAuthenticated &&
           <p>
             Want to submit your own project?&nbsp;
-            <a onClick={this.props.authActions.openAuthModal} style={{ cursor: "pointer" }}>Log in</a>.
+            <a href="" style={{ cursor: "pointer" }}>Send a PR</a>.
           </p>
-        }
 
         <div className="margin-top-10">
           <Grid stackable>
@@ -162,7 +129,6 @@ class ProjectsPage extends React.Component {
         <ProjectList
           projects={projectList}
           onTagClick={this.handleTagClick}
-          showModifyLinks={userIsStaff()}
         />
       </Container>
     );
@@ -170,11 +136,9 @@ class ProjectsPage extends React.Component {
 }
 
 ProjectsPage.propTypes = {
-  authActions: PropTypes.object.isRequired,
   projectActions: PropTypes.object.isRequired,
   projects: PropTypes.array.isRequired,
-  tagSearchOptions: PropTypes.array.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  tagSearchOptions: PropTypes.array.isRequired
 };
 
 ProjectsPage.contextTypes = {
@@ -189,14 +153,12 @@ function mapStateToProps(state, ownProps) {
 
   return {
     projects: state.projects.projects,
-    tagSearchOptions: tagSearchOptions,
-    isAuthenticated: state.auth.isAuthenticated
+    tagSearchOptions: tagSearchOptions
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    authActions: bindActionCreators(authActions, dispatch),
     projectActions: bindActionCreators(projectActions, dispatch)
   };
 }

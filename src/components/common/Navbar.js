@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Header, Menu, Button } from 'semantic-ui-react';
-import LoginSignupModal from './LoginSignup';
-import { openAuthModal, logoutUser } from '../../actions/authActions';
 
 class Navbar extends React.Component {
   constructor(props, context) {
@@ -10,14 +8,6 @@ class Navbar extends React.Component {
     this.state = { activeItem: '' };
 
     this.pageRedirect = this.pageRedirect.bind(this);
-    this.getUsername = this.getUsername.bind(this);
-  }
-
-  getUsername(event) {
-    const token = localStorage.getItem('token');
-    const base64Payload = atob(token.split('.')[1]);
-    const payload = JSON.parse(base64Payload);
-    return payload.username;
   }
 
   pageRedirect(event, item) {
@@ -29,7 +19,7 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const { dispatch, isAuthenticated } = this.props;
+    const { dispatch } = this.props;
 
     return (
       <Menu>
@@ -39,40 +29,13 @@ class Navbar extends React.Component {
         <Menu.Item name="projects" onClick={this.pageRedirect}>
           Gallery
         </Menu.Item>
-
-        {isAuthenticated &&
-          <Menu.Item name="projects/create" onClick={this.pageRedirect}>
-            Submit Project
-          </Menu.Item>
-        }
-
-        <Menu.Menu position="right">
-          <LoginSignupModal />
-
-          {!isAuthenticated &&
-            <Menu.Item>
-              <Button color="green" content="Login &middot; Signup"
-                onClick={function() { dispatch(openAuthModal()); }} />
-            </Menu.Item>
-          }
-          {isAuthenticated &&
-            <Menu.Menu position="right">
-              <Menu.Item content={this.getUsername()} />
-              <Menu.Item>
-                <Button compact basic grey icon="sign out" content="Logout"
-                  onClick={function() { dispatch(logoutUser()); }} />
-              </Menu.Item>
-            </Menu.Menu>
-          }
-        </Menu.Menu>
       </Menu>
     );
   }
 }
 
 Navbar.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  dispatch: PropTypes.func.isRequired
 };
 
 Navbar.contextTypes = {

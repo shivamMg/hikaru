@@ -1,6 +1,6 @@
 {
   "name": "hikaru",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Projects Gallery",
   "scripts": {
     "start": "npm-run-all --parallel open:src lint:watch",
@@ -16,6 +16,9 @@
   },
   "author": "Shivam Mamgain",
   "license": "GPL-3.0",
+  "contributors": [
+    "Kanishk Singh (https://arionmiles.me)"
+  ],
   "dependencies": {
     "babel-polyfill": "6.8.0",
     "cheerio": "^0.22.0",
@@ -62,6 +65,7 @@
     "style-loader": "0.13.1",
     "webpack": "1.13.0",
     "webpack-dev-middleware": "1.6.1",
-    "webpack-hot-middleware": "2.10.0"
+    "webpack-hot-middleware": "2.10.0",
+    "surge": "latest"
   }
 }
