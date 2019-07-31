@@ -1,39 +1,17 @@
 import { knuthShuffle } from 'knuth-shuffle';
 import projects from '../../data/projects';
 
-/* Helper function to sort projects by date (Schwartzian transform) */
-const sortByDate = (projects, rev = false) => {
-  // Create a tempList with calculated date (secs from epoch)
-  let tempList = [];
-  projects.map((project, i) => {
-    tempList.push({
-      index: i,
-      date: Date.parse(project.created_at)
-    });
-  });
-
-  // Sort tempList based on date
-  tempList.sort((a, b) => {
-    const diff = a.date - b.date;
-    return (rev) ? -diff : diff;
-  });
-
-  // Calculate new projects list
-  let newProjects = [];
-  tempList.map((a) => {
-    newProjects.push(projects[a.index]);
-  });
-
-  return newProjects;
-};
-
 export const sortProjects = (projects, sortValue) => {
   if (sortValue === 'created-asc') {
     /* oldest */
-    projects = sortByDate(projects);
+    projects = projects.sort((a, b) => {
+      return a.id-b.id;
+    });
   } else if (sortValue === 'created-des') {
     /* newest */
-    projects = sortByDate(projects, true);
+    projects = projects.sort((a, b) => {
+      return b.id-a.id;
+    });
   } else if (sortValue === 'random') {
     /* random */
     projects = knuthShuffle(projects);
