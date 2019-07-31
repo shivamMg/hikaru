@@ -104,7 +104,7 @@ class ProjectsPage extends React.Component {
         <Header size="large" color="grey" content="Gallery" />
           <p>
             Want to submit your own project?&nbsp;
-            <a href="" style={{ cursor: "pointer" }}>Send a PR</a>.
+            <a href="https://github.com/ArionMiles/hikaru" style={{ cursor: "pointer" }}>Send a PR</a>.
           </p>
 
         <div className="margin-top-10">
