@@ -14,8 +14,11 @@
     "build": "babel-node tools/build.js",
     "server": "cross-env PORT=3000 babel-node tools/distServer.js"
   },
-  "author": "Shivam Mamgain, Kanishk Singh",
+  "author": "Shivam Mamgain",
   "license": "GPL-3.0",
+  "contributors": [
+    "Kanishk Singh (https://arionmiles.me)"
+  ],
   "dependencies": {
     "babel-polyfill": "6.8.0",
     "cheerio": "^0.22.0",
@@ -62,6 +65,7 @@
     "style-loader": "0.13.1",
     "webpack": "1.13.0",
     "webpack-dev-middleware": "1.6.1",
-    "webpack-hot-middleware": "2.10.0"
+    "webpack-hot-middleware": "2.10.0",
+    "surge": "latest"
   }
 }
