@@ -545,5 +545,17 @@ export default [
       "django"
     ],
     "photo": "diomedes.png"
-  }
+	},
+	{
+		"id": 37,
+		"name": "Learn to draw wiki",
+		"description": "A wiki on learning to draw",
+		"sourceLink": "https://learntodraw.wiki",
+		"websiteLink": "https://learntodraw.wiki",
+		"author": "Paresh Chouhan",
+		"authorLink": "https://futuretraxex.com/",
+		"creator": "Paresh Chouhan",
+		"tags": ['drawing', 'wiki'],
+		"photo": 'learntodraw.wiki.png'
+	}
 ];
