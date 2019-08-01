@@ -32,6 +32,7 @@ To list your project in the gallery, follow these steps.
     - Increment the `"id"` value of your project entry from the previous entry's value by one.
     - If you do not wish to display an image in the project card, set the `"photo"` value to `null`.
 4. If you add an image, then set the image name as the `"photo"` value and add that image to `/src/data/project_images` directory.
+    **NOTE:** The images must have dimensions `1024x420px`.
 5. Commit and push these changes to your fork.
 6. Create a Pull Request into this repo.
 
